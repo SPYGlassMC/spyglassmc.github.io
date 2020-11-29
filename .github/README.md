@@ -10,4 +10,4 @@ The official website for the SPYGlass Project: https://spyglassmc.com.
 - [jekyll](https://jekyllrb.com/)
 - [jekyll GitHub Action](https://github.com/helaili/jekyll-action)
 - [jekyll minima theme](https://github.com/jekyll/minima)
-- [WikiToJekyll GitHub Action](https://github.com/djacquel/WikiToJekyll)
+- [WikiToJekyll](https://github.com/djacquel/WikiToJekyll)
