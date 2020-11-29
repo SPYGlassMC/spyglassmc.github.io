@@ -7,8 +7,8 @@ github_username: SPYGlassMC
 
 # Build settings
 theme: minima
-# plugins:
-  # - jekyll-feed
+plugins:
+  - jekyll-redirect-from
 
 exclude:
   - .github
