@@ -12,7 +12,6 @@ theme: minima
 
 exclude:
   - .github
-  - CNAME
   - vendor
 
 ##
