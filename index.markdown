@@ -4,17 +4,10 @@ layout: page
 
 SPYGlass is a set of development tools for vanilla Minecraft: Java Edition content creators.
 
+It was former known as Data-pack Helper Plus, which could be installed as a VS Code extension at [here](https://marketplace.visualstudio.com/items?itemName=SPGoding.datapack-language-server).
+
+The project is under a complete rewrite.
+
 # Projects
 
-This section is working in progress. The list below is more like showing a plan insteand of describing the reality.
-
-- `mcschema-validator`
-- `mcfunction-interpreter`
-- `nbtdoc-interpreter`
-- `snbt-interpreter`
-- `atom-extension`
-- `emacs-extension`
-- `sublime-extension`
-- `vscode-extension`
-- `vim-extension`
-- `whatever-editor-extension`
+🚧 WIP 🚧
