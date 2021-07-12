@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Env Options | SPYGlass</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Env Options" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<meta property="og:description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<link rel="canonical" href="https://spyglassmc.com/wiki/Env-Options.html" />
+<meta property="og:url" content="https://spyglassmc.com/wiki/Env-Options.html" />
+<meta property="og:site_name" content="SPYGlass" />
+<script type="application/ld+json">
+{"description":"Development tools for vanilla Minecraft: Java Edition content creators.","url":"https://spyglassmc.com/wiki/Env-Options.html","@type":"WebPage","headline":"Env Options","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://spyglassmc.com/feed.xml" title="SPYGlass" /></head>
+<body><header class="site-header" role="banner">
+	<div class="wrapper"><a class="site-title" rel="author" href="/"><img src="/favicon.ico" height="30em"> SPYGlass</a><nav class="site-nav">
+				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+				<label for="nav-trigger">
+					<span class="menu-icon">
+						<svg viewBox="0 0 18 15" width="18px" height="15px">
+							<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+						</svg>
+					</span>
+				</label>
+
+				<div class="trigger"><a class="page-link" href="/blog/">Blog</a><a class="page-link" href="/discuss/">Discuss</a><a class="page-link" href="/localization/">Localization</a><a class="page-link" href="/usage/">Usage</a><a class="page-link" href="/wiki/">Wiki</a></div>
+			</nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Env Options</h1>
+  </header>
+
+  <div class="post-content">
+    <p>There are several environment settings provided by DHP for <code class="language-plaintext highlighter-rouge">mcfunction</code> files,
+which are put under the <code class="language-plaintext highlighter-rouge">datapack.env.*</code> config section.</p>
+
+<ul>
+  <li><a href="#list-of-options">List of Options</a>
+    <ul>
+      <li><a href="#cmdversion"><code class="language-plaintext highlighter-rouge">cmdVersion</code></a>
+        <ul>
+          <li><a href="#available-options">Available options</a></li>
+        </ul>
+      </li>
+      <li><a href="#datasource"><code class="language-plaintext highlighter-rouge">dataSource</code></a>
+        <ul>
+          <li><a href="#available-options-1">Available options</a></li>
+        </ul>
+      </li>
+      <li><a href="#dataversion"><code class="language-plaintext highlighter-rouge">dataVersion</code></a>
+        <ul>
+          <li><a href="#available-options-2">Available options</a></li>
+        </ul>
+      </li>
+      <li><a href="#defaultvisibility"><code class="language-plaintext highlighter-rouge">defaultVisibility</code></a>
+        <ul>
+          <li><a href="#available-options-3">Available options</a></li>
+        </ul>
+      </li>
+      <li><a href="#dependsonvanilla"><code class="language-plaintext highlighter-rouge">dependsOnVanilla</code></a>
+        <ul>
+          <li><a href="#available-options-4">Available options</a></li>
+        </ul>
+      </li>
+      <li><a href="#detectiondepth"><code class="language-plaintext highlighter-rouge">detectionDepth</code></a>
+        <ul>
+          <li><a href="#available-options-5">Available options</a></li>
+        </ul>
+      </li>
+      <li><a href="#exclude"><code class="language-plaintext highlighter-rouge">exclude</code></a>
+        <ul>
+          <li><a href="#example">Example</a></li>
+        </ul>
+      </li>
+      <li><a href="#include"><code class="language-plaintext highlighter-rouge">include</code></a>
+        <ul>
+          <li><a href="#example-1">Example</a></li>
+        </ul>
+      </li>
+      <li><a href="#jsonversion"><code class="language-plaintext highlighter-rouge">jsonVersion</code></a>
+        <ul>
+          <li><a href="#available-options-6">Available options</a></li>
+        </ul>
+      </li>
+      <li><a href="#language"><code class="language-plaintext highlighter-rouge">language</code></a>
+        <ul>
+          <li><a href="#available-options-7">Available Options</a></li>
+        </ul>
+      </li>
+      <li><a href="#permissionlevel"><code class="language-plaintext highlighter-rouge">permissionLevel</code></a>
+        <ul>
+          <li><a href="#available-options-8">Available Options</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#history">History</a></li>
+</ul>
+
+<h1 id="list-of-options">List of Options</h1>
+
+<h2 id="cmdversion"><code class="language-plaintext highlighter-rouge">cmdVersion</code></h2>
+
+<p>The command syntax version for this project.</p>
+
+<h3 id="available-options">Available options</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"1.17"</code>: For the latest <a href="https://minecraft.gamepedia.com/Java_Edition_1.17"><em>Minecraft: Java Edition</em> 1.17</a> snapshot.</li>
+  <li><code class="language-plaintext highlighter-rouge">"1.16"</code>: (Default) For <a href="https://minecraft.gamepedia.com/Java_Edition_1.16.4"><em>Minecraft: Java Edition</em> 1.16.4</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">"1.15"</code>: For <a href="https://minecraft.gamepedia.com/Java_Edition_1.15.2"><em>Minecraft: Java Edition</em> 1.15.2</a>.</li>
+</ul>
+
+<h2 id="datasource"><code class="language-plaintext highlighter-rouge">dataSource</code></h2>
+
+<p>The download source of the completion data.</p>
+
+<h3 id="available-options-1">Available options</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"GitHub"</code>: (Default) Download those data from <code class="language-plaintext highlighter-rouge">raw.githubusercontent.com</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">"码云"</code>: Download those data from <code class="language-plaintext highlighter-rouge">gitee.com</code>. You can choose this if <code class="language-plaintext highlighter-rouge">raw.githubusercontent.com</code> is blocked 
+in your country/region.</li>
+</ul>
+
+<h2 id="dataversion"><code class="language-plaintext highlighter-rouge">dataVersion</code></h2>
+
+<p>The completion data version for this project. This option affects completions for namespaced IDs 
+(like entity IDs, block IDs, etc), NBT tags, and NBT paths.</p>
+
+<h3 id="available-options-2">Available options</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"Latest snapshot"</code>: Case-insensitive. Use the latest snapshot.</li>
+  <li><code class="language-plaintext highlighter-rouge">"Latest release"</code>: (Default) Case-insensitive. Use the latest release.</li>
+  <li>Any other version identities in <a href="https://launchermeta.mojang.com/mc/game/version_manifest.json">the version manifest</a> 
+that were released after <a href="https://minecraft.gamepedia.com/Java_Edition_19w40a"><em>Minecraft: Java Edition</em> <code class="language-plaintext highlighter-rouge">19w40a</code></a>.</li>
+</ul>
+
+<h2 id="defaultvisibility"><code class="language-plaintext highlighter-rouge">defaultVisibility</code></h2>
+
+<p>Specify the default visibility for resources. See also <a href="Access-Modifiers">Access Modifiers</a>.</p>
+
+<h3 id="available-options-3">Available options</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"public"</code>: (Default) Public.</li>
+  <li><code class="language-plaintext highlighter-rouge">"internal"</code>: Internal.</li>
+  <li><code class="language-plaintext highlighter-rouge">"private"</code>: Private.</li>
+  <li>(Object) Simulates a <code class="language-plaintext highlighter-rouge">@within</code> modifier.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">type</code>: The type of files that can access this resource. Can be one of the <a href="Cache-Type#file-types">file types</a> 
+  or <code class="language-plaintext highlighter-rouge">"*"</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">pattern</code>: A namespaced ID pattern. See <a href="Access-Modifiers">Access Modifiers</a> for more information.</li>
+    </ul>
+  </li>
+  <li>(Array) Simulates a series of <code class="language-plaintext highlighter-rouge">@within</code> modifiers.
+    <ul>
+      <li>(Object) Using the same format as the above object.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="dependsonvanilla"><code class="language-plaintext highlighter-rouge">dependsOnVanilla</code></h2>
+
+<p>Whether this datapack depends on the vanilla datapack or not. If this option is enabled,
+completions for the corresponding data of the vanilla datapack will be provided.</p>
+
+<h3 id="available-options-4">Available options</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">true</code>: (Default) Enable.</li>
+  <li><code class="language-plaintext highlighter-rouge">false</code>: Disable.</li>
+</ul>
+
+<h2 id="detectiondepth"><code class="language-plaintext highlighter-rouge">detectionDepth</code></h2>
+
+<p>The language server detects recursively to see if there is a <code class="language-plaintext highlighter-rouge">pack.mcmeta</code> file and a <code class="language-plaintext highlighter-rouge">data</code> folder so that it can
+tell if a folder is a data pack. By changing the value of this config, you can alter the data pack detection depth
+of the language server. Note that higher values require more time to check and might reduce the performance.</p>
+
+<p>By setting a value greater than or equal to <code class="language-plaintext highlighter-rouge">1</code>, you can open the <code class="language-plaintext highlighter-rouge">.minecraft/saves/&lt;save name&gt;/datapacks</code> folder
+directly in your editor and enjoy editing all data packs within it instead of having all data packs added to the
+workspace manually.</p>
+
+<h3 id="available-options-5">Available options</h3>
+
+<ul>
+  <li>Any integer. Defaults to <code class="language-plaintext highlighter-rouge">1</code>.</li>
+</ul>
+
+<h2 id="exclude"><code class="language-plaintext highlighter-rouge">exclude</code></h2>
+
+<p>Files that should be excluded from validation. Each string in this array will be interpreted as a 
+<a href="https://en.wikipedia.org/wiki/Glob_(programming)">glob pattern</a> to test the 
+<a href="https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths">relative file paths</a> 
+from the root of the datapack.</p>
+
+<h3 id="example">Example</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"datapack.env.exclude"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"data/spgoding/functions/generated/**/*.mcfunction"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This will make the language server not validate any <code class="language-plaintext highlighter-rouge">mcfunction</code> files under the 
+<code class="language-plaintext highlighter-rouge">data/spgoding/functions/generated/</code> directory.</p>
+
+<h2 id="include"><code class="language-plaintext highlighter-rouge">include</code></h2>
+
+<p>Files that should be included from validation. Each string in this array will be interpreted as a 
+<a href="https://en.wikipedia.org/wiki/Glob_(programming)">glob pattern</a> to test the 
+<a href="https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths">relative file paths</a> 
+from the root of the datapack.</p>
+
+<p>This option takes priority over <code class="language-plaintext highlighter-rouge">exclude</code>.</p>
+
+<h3 id="example-1">Example</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"datapack.env.exclude"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"data/spgoding/functions/generated/**/*.mcfunction"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"datapack.env.include"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"data/spgoding/functions/generated/special.mcfunction"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This will make the language server not validate any <code class="language-plaintext highlighter-rouge">mcfunction</code> files under the 
+<code class="language-plaintext highlighter-rouge">data/spgoding/functions/generated/</code> directory, except 
+<code class="language-plaintext highlighter-rouge">data/spgoding/functions/generated/special.mcfunction</code>.</p>
+
+<h2 id="jsonversion"><code class="language-plaintext highlighter-rouge">jsonVersion</code></h2>
+
+<p>The version of the JSON schemas. Only major versions are available.</p>
+
+<h3 id="available-options-6">Available options</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"1.17"</code>: For the latest <a href="https://minecraft.gamepedia.com/Java_Edition_1.17"><em>Minecraft: Java Edition</em> 1.17</a> snapshot.</li>
+  <li><code class="language-plaintext highlighter-rouge">"1.16"</code>: (Default) For <a href="https://minecraft.gamepedia.com/Java_Edition_1.16.4"><em>Minecraft: Java Edition</em> 1.16.4</a>.</li>
+</ul>
+
+<h2 id="language"><code class="language-plaintext highlighter-rouge">language</code></h2>
+
+<p>The language in which the texts provided by the language server should be.</p>
+
+<h3 id="available-options-7">Available Options</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"Default"</code>: (Default) Use the same language as VS Code uses.</li>
+  <li><em>code</em>:  Use the specific language.</li>
+</ul>
+
+<h2 id="permissionlevel"><code class="language-plaintext highlighter-rouge">permissionLevel</code></h2>
+
+<p>The permission level for <code class="language-plaintext highlighter-rouge">mcfunction</code> files in this projects. Should be lower than 
+or equal to the <code class="language-plaintext highlighter-rouge">function-permission-level</code> defined in your <code class="language-plaintext highlighter-rouge">server.properties</code>.</p>
+
+<h3 id="available-options-8">Available Options</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">2</code>: (Default) Use permission level <code class="language-plaintext highlighter-rouge">2</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">1</code>:  Use permission level <code class="language-plaintext highlighter-rouge">1</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">3</code>:  Use permission level <code class="language-plaintext highlighter-rouge">3</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">4</code>:  Use permission level <code class="language-plaintext highlighter-rouge">4</code>.</li>
+</ul>
+
+<h1 id="history">History</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v1.1.0">1.1.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">version</code> and <code class="language-plaintext highlighter-rouge">permissionLevel</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v1.13.5">1.13.5</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">dataVersion</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-2.0.0">2.0.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">dataSource</code>, <code class="language-plaintext highlighter-rouge">dependsOnVanilla</code>, <code class="language-plaintext highlighter-rouge">exclude</code>, and <code class="language-plaintext highlighter-rouge">include</code>. Renamed <code class="language-plaintext highlighter-rouge">version</code> to <code class="language-plaintext highlighter-rouge">cmdVersion</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-2.1.0">2.1.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">language</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-3.0.0">3.0.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">defaultVisibility</code>, <code class="language-plaintext highlighter-rouge">detectionDepth</code>, and <code class="language-plaintext highlighter-rouge">jsonVersion</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"></a><br>The contents of this website, unless otherwise indicated, are licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			We have shamelessly stolen some of the website design from the <a href="https://fabricmc.net/">Fabric website</a>.</p>
+			<p style="font-size: 0.7em;">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</p>
+		</div>
+
+	</div>
+</footer>
+</body>
+
+</html>

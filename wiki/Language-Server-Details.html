@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Language Server Details | SPYGlass</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Language Server Details" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<meta property="og:description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<link rel="canonical" href="https://spyglassmc.com/wiki/Language-Server-Details.html" />
+<meta property="og:url" content="https://spyglassmc.com/wiki/Language-Server-Details.html" />
+<meta property="og:site_name" content="SPYGlass" />
+<script type="application/ld+json">
+{"description":"Development tools for vanilla Minecraft: Java Edition content creators.","url":"https://spyglassmc.com/wiki/Language-Server-Details.html","@type":"WebPage","headline":"Language Server Details","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://spyglassmc.com/feed.xml" title="SPYGlass" /></head>
+<body><header class="site-header" role="banner">
+	<div class="wrapper"><a class="site-title" rel="author" href="/"><img src="/favicon.ico" height="30em"> SPYGlass</a><nav class="site-nav">
+				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+				<label for="nav-trigger">
+					<span class="menu-icon">
+						<svg viewBox="0 0 18 15" width="18px" height="15px">
+							<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+						</svg>
+					</span>
+				</label>
+
+				<div class="trigger"><a class="page-link" href="/blog/">Blog</a><a class="page-link" href="/discuss/">Discuss</a><a class="page-link" href="/localization/">Localization</a><a class="page-link" href="/usage/">Usage</a><a class="page-link" href="/wiki/">Wiki</a></div>
+			</nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Language Server Details</h1>
+  </header>
+
+  <div class="post-content">
+    <p>As a language server, you can simply implement the features provided by the datapack-language-server on any other modern editors. Here are all the technical details you may concern.</p>
+
+<ul>
+  <li><a href="#integrate">Integrate</a></li>
+  <li><a href="#server-capabilities">Server Capabilities</a></li>
+  <li><a href="#client-requirements">Client Requirements</a>
+    <ul>
+      <li><a href="#custom-messages">Custom Messages</a></li>
+      <li><a href="#initialization-options">Initialization options</a></li>
+      <li><a href="#settings">Settings</a></li>
+    </ul>
+  </li>
+  <li><a href="#references">References</a></li>
+  <li><a href="#history">History</a></li>
+</ul>
+
+<h1 id="integrate">Integrate</h1>
+
+<p>Check out <a href="https://microsoft.github.io/language-server-protocol/implementors/tools/">this page</a> to see if there’s already an LSP client integration available.</p>
+
+<p>You can also launch the language server as a command and connect to it. For that, install the <a href="https://www.npmjs.com/package/datapack-language-server">datapack-language-server</a> npm module:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i -g datapack-language-server
+</code></pre></div></div>
+
+<p>Start the language server with the <code class="language-plaintext highlighter-rouge">datapack-language-server</code> command.</p>
+
+<h1 id="server-capabilities">Server Capabilities</h1>
+
+<p>The language server supports request on documents of language id <code class="language-plaintext highlighter-rouge">mcfunction</code> and <code class="language-plaintext highlighter-rouge">json</code>.</p>
+<ul>
+  <li>There’s no specification for <code class="language-plaintext highlighter-rouge">mcfunction</code> files. The language server tries it best to imitate how <em>Minecraft</em>: Java Edition behaves. All inconsistencies are considerd as bugs of either the language server or <em>Minecraft</em>, and should be reported at either <a href="https://github.com/SPGoding/datapack-language-server/issues">Issues</a> or <a href="https://bugs.mojang.com/projects/MC/summary">Mojira</a>.</li>
+  <li>Only JSON files under specific directories can be handled by the language server. A complete list of glob patterns that match supported JSON files can be found <a href="https://github.com/SPGoding/datapack-language-server/blob/master/src/utils/PathPatterns.ts">here</a>.</li>
+</ul>
+
+<p>The language server protocol consists of a number of capabilities. Here’s a list of capabilities that are implemented by the language server.</p>
+
+<ul>
+  <li>✅ Call hierarchy provider
+    <ul>
+      <li>✅ <a href=""><code class="language-plaintext highlighter-rouge">textDocument/prepareCallHierarchy</code></a></li>
+      <li>✅ <a href=""><code class="language-plaintext highlighter-rouge">callHierarchy/incomingCalls</code></a></li>
+      <li>✅ <a href=""><code class="language-plaintext highlighter-rouge">callHierarchy/outgoingCalls</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Color provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_documentColor"><code class="language-plaintext highlighter-rouge">textDocument/documentColor</code></a></li>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_colorPresentation"><code class="language-plaintext highlighter-rouge">textDocument/colorPresentation</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Completion provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_completion"><code class="language-plaintext highlighter-rouge">textDocument/completion</code></a></li>
+      <li>❌ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#completionItem_resolve"><code class="language-plaintext highlighter-rouge">completionItem/resolve</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Definition provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_definition"><code class="language-plaintext highlighter-rouge">textDocument/definition</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Declaration provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_declaration"><code class="language-plaintext highlighter-rouge">textDocument/declaration</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Document formatting provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_formatting"><code class="language-plaintext highlighter-rouge">textDocument/formatting</code></a></li>
+      <li>❌ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_rangeFormatting"><code class="language-plaintext highlighter-rouge">textDocument/rangeFormatting</code></a></li>
+      <li>❌ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_onTypeFormatting"><code class="language-plaintext highlighter-rouge">textDocument/onTypeFormatting</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Document highlight provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_documentHighlight"><code class="language-plaintext highlighter-rouge">textDocument/documentHighlight</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Document link provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_documentLink"><code class="language-plaintext highlighter-rouge">textDocument/documentLink</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Execute command provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#workspace_executeCommand"><code class="language-plaintext highlighter-rouge">workspace/executeCommand</code></a></li>
+      <li>⚠️ Available <a href="Commands">commands</a></li>
+    </ul>
+  </li>
+  <li>✅ Folding range provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_foldingRange"><code class="language-plaintext highlighter-rouge">textDocument/foldingRange</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Hover provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_hover"><code class="language-plaintext highlighter-rouge">textDocument/hover</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Reference provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_references"><code class="language-plaintext highlighter-rouge">textDocument/references</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Rename provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_prepareRename"><code class="language-plaintext highlighter-rouge">textDocument/prepareRename</code></a></li>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_rename"><code class="language-plaintext highlighter-rouge">textDocument/rename</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Selection range provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_selectionRange"><code class="language-plaintext highlighter-rouge">textDocument/selectionRange</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Semantic tokens provider
+    <ul>
+      <li>✅ <a href=""><code class="language-plaintext highlighter-rouge">textDocument/semanticTokens</code></a></li>
+      <li>✅ <a href=""><code class="language-plaintext highlighter-rouge">textDocument/semanticTokens/edits</code></a></li>
+      <li>✅ <a href=""><code class="language-plaintext highlighter-rouge">textDocument/semanticTokens/range</code></a></li>
+      <li>⚠️ Semantic <a href="Semantic-Coloring">legend</a></li>
+    </ul>
+  </li>
+  <li>✅ Signature help provider
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_selectionRange"><code class="language-plaintext highlighter-rouge">textDocument/selectionRange</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Text document sync
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_didOpen"><code class="language-plaintext highlighter-rouge">textDocument/didOpen</code></a></li>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_didChange"><code class="language-plaintext highlighter-rouge">textDocument/didChange</code></a>: Incremental update.</li>
+      <li>❌ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_willSave"><code class="language-plaintext highlighter-rouge">textDocument/willSave</code></a></li>
+      <li>❌ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_willSaveWaitUntil"><code class="language-plaintext highlighter-rouge">textDocument/willSaveWaitUntil</code></a></li>
+      <li>❌ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_didSave"><code class="language-plaintext highlighter-rouge">textDocument/didSave</code></a></li>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_didClose"><code class="language-plaintext highlighter-rouge">textDocument/didClose</code></a></li>
+    </ul>
+  </li>
+  <li>✅ Watch files
+    <ul>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#workspace_didChangeWatchedFiles"><code class="language-plaintext highlighter-rouge">workspace/didChangeWatchedFiles</code></a></li>
+      <li>⚠️ Here is a list of files that <em>should</em> be watched; glob patterns are relative from the root of workspace folders.
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">**/data/**/*.{json,mcfunction,nbt}</code>: Should trigger create event, change event, and delete event.</li>
+          <li><code class="language-plaintext highlighter-rouge">**/{data,pack.mcmeta}</code>: Should trigger create event and delete event. When events for these entries are received, the language server will start re-detecting data packs. The client <em>should not</em> send change events for these entries, otherwise it would make the language server laggy.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>✅ Workspace
+    <ul>
+      <li>✅ Multi-root workspace.</li>
+      <li>✅ <a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#workspace_didChangeWorkspaceFolders"><code class="language-plaintext highlighter-rouge">workspace/didChangeWorkspaceFolders</code></a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="client-requirements">Client Requirements</h1>
+
+<p>The language server expects the client to only send messages for documents of language ID <code class="language-plaintext highlighter-rouge">mcfunction</code>, certain JSON files, and <code class="language-plaintext highlighter-rouge">pack.mcmeta</code>:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"documentSelector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mcfunction"</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="nl">"scheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w"> </span><span class="nl">"pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"**/pack.mcmeta"</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="nl">"scheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w"> </span><span class="nl">"pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"**/data/*/*/**/*.json"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>However, if your client doesn’t support the <code class="language-plaintext highlighter-rouge">pattern</code> selector, you <em>may</em> send all requests of language ID <code class="language-plaintext highlighter-rouge">json</code> to the language server. Hopefully the server can handle them correctly for you.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"documentSelector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mcfunction"</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"json"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The client <em>must not</em> throw exceptions when it receives the following messages from the server:</p>
+
+<ul>
+  <li><a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#window_showMessage"><code class="language-plaintext highlighter-rouge">window/showMessage</code></a></li>
+  <li><a href="https://microsoft.github.io/language-server-protocol/specifications/specification-current/#window_showMessageRequest"><code class="language-plaintext highlighter-rouge">window/showMessageRequest</code></a></li>
+</ul>
+
+<p>Also, the client <em>may</em> somehow provide supports for stuff marked as ⚠️ in the <a href="#server-capabilities">Server Capabilities section</a> to enjoy full features provided by the server.</p>
+
+<h2 id="custom-messages">Custom Messages</h2>
+
+<p>The client <em>may</em> provide support for the following custom messages that are sent from the server to the client:</p>
+
+<!-- - `spgoding/datapack/attachCss` request: attach CSS code to specific texts to change their styles. All former attached CSS should be wiped when the client receives this request.
+    - `uri`: The URI of the text document where the CSS is attached.
+    - `attach`: An array of CSS elements to attach.
+        - _(An object)_
+            - `range`: A LSP [range](https://microsoft.github.io/language-server-protocol/specification#range). The range that the CSS should be applied to.
+            - `css`: A string. The CSS code that should be attached to the range. -->
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">spgoding/datapack/checkServerVersion</code> notification: check if the version where the language server was started last time is older than current version. If so, the client <em>may</em> show an information box indicating the user.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">currentVersion</code>: A string. The current version of the language server.</li>
+      <li><code class="language-plaintext highlighter-rouge">title</code>: A string. If the client decides to show an information box, this title <em>may</em> be used.</li>
+      <li><code class="language-plaintext highlighter-rouge">action</code>: A string. If the client decides to show an information box, this action <em>may</em> be used as the title of the action button.</li>
+      <li><code class="language-plaintext highlighter-rouge">url</code>: A string. If the client decides to show an information box, clicking the action button <em>may</em> open this URL.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="initialization-options">Initialization options</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">globalStoragePath</code>: (Optional) A string. Should be a path to a folder where the language server can store <em>global</em> cache files, like the block definitions, registries, and nbtdocs for <em>Minecraft</em>. The folder doesn’t need to exist, but the client <em>must</em> ensure that the server has the permission to create, read, and write to that folder. If not specified, the language server will use the platform-specific <a href="https://www.npmjs.com/package/appdata-path">appdata-path</a> for the <code class="language-plaintext highlighter-rouge">spgoding.datapack-language-server</code> APP name.</li>
+  <li><code class="language-plaintext highlighter-rouge">storagePath</code>: (Optional) A string. Should be a path to a folder where the language server can store <em>workspace-specific</em> cache file. The folder doesn’t need to exist, but the client must ensure that the server has the permission to create, read, and write to that folder. If not specified, the cache file won’t be saved and the language server need to generate it every time it starts.</li>
+  <li><code class="language-plaintext highlighter-rouge">localeCode</code>: (Optional) A string, defaults to <code class="language-plaintext highlighter-rouge">en</code>. Should be a locale code that the server could use when the <code class="language-plaintext highlighter-rouge">datapack.env.language</code> setting is set to <code class="language-plaintext highlighter-rouge">Default</code>. A list of acceptable locale codes can be fond <a href="Locale-Codes">here</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">customCapabilities</code>: (Optional) An object which indicates the server what custom messages does the client support.
+  <!-- - `attachCss`: (Optional) If the client supports the custom `spgoding/datapack/attachCss` request. -->
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">checkServerVersion</code>: (Optional) If the client supports the custom <code class="language-plaintext highlighter-rouge">spgoding/datapack/checkServerVersion</code> notification.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="settings">Settings</h2>
+
+<p>If the client indicates that it supports the <code class="language-plaintext highlighter-rouge">workspace/configuration</code> request, the response for it <em>must</em> follow the <code class="language-plaintext highlighter-rouge">Config</code> interface in <a href="https://github.com/SPGoding/datapack-language-server/blob/master/src/types/Config.ts"><code class="language-plaintext highlighter-rouge">src/types/Config.ts</code></a>.</p>
+
+<h1 id="references">References</h1>
+
+<ul>
+  <li><a href="https://github.com/vscode-langservers/vscode-json-languageserver">vscode-json-languageserver</a></li>
+</ul>
+
+<h1 id="history">History</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-3.0.0">3.0.0</a></td>
+      <td>Supported <code class="language-plaintext highlighter-rouge">textDocument/declaration</code> request on server.<br />Both <code class="language-plaintext highlighter-rouge">storagePath</code> and <code class="language-plaintext highlighter-rouge">globalStoragePath</code> are no longer required in the initialization options.<br />Added <code class="language-plaintext highlighter-rouge">localeCode</code> and <code class="language-plaintext highlighter-rouge">customCapabilities</code> initialization options.<br />The prefix for custom messages is changed from <code class="language-plaintext highlighter-rouge">datapackLanguageServer/</code> to <code class="language-plaintext highlighter-rouge">spgoding/datapack/</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-3.0.0">3.0.1</a></td>
+      <td>Files with the <code class="language-plaintext highlighter-rouge">.nbt</code> extension should also be watched on client.</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"></a><br>The contents of this website, unless otherwise indicated, are licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			We have shamelessly stolen some of the website design from the <a href="https://fabricmc.net/">Fabric website</a>.</p>
+			<p style="font-size: 0.7em;">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</p>
+		</div>
+
+	</div>
+</footer>
+</body>
+
+</html>

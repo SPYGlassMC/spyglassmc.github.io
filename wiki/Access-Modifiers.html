@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Access Modifiers | SPYGlass</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Access Modifiers" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<meta property="og:description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<link rel="canonical" href="https://spyglassmc.com/wiki/Access-Modifiers.html" />
+<meta property="og:url" content="https://spyglassmc.com/wiki/Access-Modifiers.html" />
+<meta property="og:site_name" content="SPYGlass" />
+<script type="application/ld+json">
+{"description":"Development tools for vanilla Minecraft: Java Edition content creators.","url":"https://spyglassmc.com/wiki/Access-Modifiers.html","@type":"WebPage","headline":"Access Modifiers","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://spyglassmc.com/feed.xml" title="SPYGlass" /></head>
+<body><header class="site-header" role="banner">
+	<div class="wrapper"><a class="site-title" rel="author" href="/"><img src="/favicon.ico" height="30em"> SPYGlass</a><nav class="site-nav">
+				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+				<label for="nav-trigger">
+					<span class="menu-icon">
+						<svg viewBox="0 0 18 15" width="18px" height="15px">
+							<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+						</svg>
+					</span>
+				</label>
+
+				<div class="trigger"><a class="page-link" href="/blog/">Blog</a><a class="page-link" href="/discuss/">Discuss</a><a class="page-link" href="/localization/">Localization</a><a class="page-link" href="/usage/">Usage</a><a class="page-link" href="/wiki/">Wiki</a></div>
+			</nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Access Modifiers</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Access modifiers can limit the use of certain resources in a set of specific files. They should be put as 
+annotations in <a href="IMP-Doc">IMP-Doc</a> comments.</p>
+
+<p><strong>All of these access modifiers will only be used by DHP for providing completions and diagnostics.</strong> If your project
+is large enough and you don’t want your completion list to be filled with hundreds of items, you can use this feature.
+These modifiers will <em>not</em> affect any of the in-game behavior. You can actually use “private” resources anywhere.</p>
+
+<ul>
+  <li><a href="#within"><code class="language-plaintext highlighter-rouge">@within</code></a>
+    <ul>
+      <li><a href="#syntax">Syntax</a>
+        <ul>
+          <li><a href="#file-type">File Type</a></li>
+          <li><a href="#namespaced-id-pattern">Namespaced ID Pattern</a></li>
+        </ul>
+      </li>
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+  </li>
+  <li><a href="#private"><code class="language-plaintext highlighter-rouge">@private</code></a>
+    <ul>
+      <li><a href="#syntax-1">Syntax</a></li>
+      <li><a href="#examples-1">Examples</a></li>
+    </ul>
+  </li>
+  <li><a href="#internal"><code class="language-plaintext highlighter-rouge">@internal</code></a>
+    <ul>
+      <li><a href="#syntax-2">Syntax</a></li>
+      <li><a href="#examples-2">Examples</a></li>
+    </ul>
+  </li>
+  <li><a href="#public-and-api"><code class="language-plaintext highlighter-rouge">@public</code> and <code class="language-plaintext highlighter-rouge">@api</code></a>
+    <ul>
+      <li><a href="#syntax-3">Syntax</a></li>
+      <li><a href="#examples-3">Examples</a></li>
+    </ul>
+  </li>
+  <li><a href="#default-visibility-config">Default Visibility Config</a></li>
+  <li><a href="#strict-check-configs">Strict Check Configs</a></li>
+</ul>
+
+<h1 id="within"><code class="language-plaintext highlighter-rouge">@within</code></h1>
+
+<p>Restrict the visibility of this resource to certain files that match the namespaced ID pattern.</p>
+
+<h2 id="syntax">Syntax</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">within &lt;id: namespaced ID pattern&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">within * &lt;id: namespaced ID pattern&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">within &lt;type: file type&gt; &lt;id: namespaced ID pattern&gt;</code></li>
+</ul>
+
+<h3 id="file-type">File Type</h3>
+
+<p>You can see a full list of file types in <a href="Cache-Type#file-types">this page</a>. Only the specified type of files that 
+match the namespaced ID pattern can access to the resource.</p>
+
+<p>Specifying <code class="language-plaintext highlighter-rouge">*</code> or not specifying file type at all results in allowing any types of files that match the pattern to
+access the resource.</p>
+
+<h3 id="namespaced-id-pattern">Namespaced ID Pattern</h3>
+
+<p>A namespaced ID pattern is really similar to a namespaced ID. The difference is that you can use certain wildcards in
+it:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">?</code>: Represents an arbitrary character that matches <code class="language-plaintext highlighter-rouge">[a-z0-9_\-\.]</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">*</code>: Represents 1 or more characters that matches <code class="language-plaintext highlighter-rouge">[a-z0-9_\-\.]</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">**</code>: Represents any amount (including 0) of any characters (including <code class="language-plaintext highlighter-rouge">:</code> and <code class="language-plaintext highlighter-rouge">/</code>).</li>
+</ul>
+
+<p>Some examples of the namespaced ID pattern:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">spgoding:foo</code>: Matches <code class="language-plaintext highlighter-rouge">spgoding:foo</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">spgoding:ba?</code>: Matches <code class="language-plaintext highlighter-rouge">spgoding:bar</code> and <code class="language-plaintext highlighter-rouge">spgoding:baz</code>, but not <code class="language-plaintext highlighter-rouge">spgoding:foo</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">spgoding:*/qux</code>: Matches <code class="language-plaintext highlighter-rouge">spgoding:foo/qux</code> and <code class="language-plaintext highlighter-rouge">spgoding:bar/qux</code>, but not <code class="language-plaintext highlighter-rouge">spgoding:abc</code> nor <code class="language-plaintext highlighter-rouge">spgoding:qux</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">spgoding:**/foo</code>: Matches <code class="language-plaintext highlighter-rouge">spgoding:foo</code>, <code class="language-plaintext highlighter-rouge">spgoding:bar/foo</code>, and <code class="language-plaintext highlighter-rouge">spgoding:bar/qux/foo</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">spgoding:**</code>: Matches any files that is under the <code class="language-plaintext highlighter-rouge">spgoding</code> namespace.</li>
+  <li><code class="language-plaintext highlighter-rouge">**</code>: Matches everything.</li>
+</ul>
+
+<h2 id="examples">Examples</h2>
+
+<pre><code class="language-mcfunction">#&gt; spgoding:foo
+# This function can be accessed from any files under the `example` namespace.
+# @within example:**
+
+#&gt; spgoding:foo
+# This function can be accessed from any files under the `example` namespace.
+# @within * example:**
+
+#&gt; spgoding:foo
+# This function can only be accessed from functions under the `example` namespace.
+# @within function example:**
+
+#&gt; spgoding:foo
+# This function can be accessed from both functions and function tags under the `example` namespace.
+# @within 
+#   function example:**
+#   tag/function example:**
+</code></pre>
+
+<h1 id="private"><code class="language-plaintext highlighter-rouge">@private</code></h1>
+
+<p>Restrict the visibility of this resource to the current file.</p>
+
+<h2 id="syntax-1">Syntax</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@private</code></li>
+</ul>
+
+<h2 id="examples-1">Examples</h2>
+
+<pre><code class="language-mcfunction">#&gt;
+# This objective can be accessed from the current file.
+# @private
+scoreboard objectives add foo dummy
+
+#&gt;
+# The effect of @private can actually be implemented with @within:
+# @within &lt;The ID of the current function file&gt;
+</code></pre>
+
+<h1 id="internal"><code class="language-plaintext highlighter-rouge">@internal</code></h1>
+
+<p>Restrict the visibility of this resource to the same namespace as the current file and the default
+namespace (<code class="language-plaintext highlighter-rouge">minecraft</code>).</p>
+
+<h2 id="syntax-2">Syntax</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@internal</code></li>
+</ul>
+
+<h2 id="examples-2">Examples</h2>
+
+<pre><code class="language-mcfunction">#&gt; spgoding:foo
+# This function can be accessed from any files under the `spgoding` namespace and the `minecraft` namespace.
+# @internal
+
+#&gt; spgoding:foo
+# The effect of @internal can actually be implemented with @within:
+# @within
+#   spgoding:**
+#   minecraft:**
+</code></pre>
+
+<h1 id="public-and-api"><code class="language-plaintext highlighter-rouge">@public</code> and <code class="language-plaintext highlighter-rouge">@api</code></h1>
+
+<p>No restrictions to the visibility of this resource.</p>
+
+<h2 id="syntax-3">Syntax</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@public</code></li>
+  <li><code class="language-plaintext highlighter-rouge">@api</code></li>
+</ul>
+
+<h2 id="examples-3">Examples</h2>
+
+<pre><code class="language-mcfunction">#&gt; spgoding:foo
+# This function can be accessed from everywhere.
+# @public
+
+#&gt; spgoding:foo
+# The effect of @public can actually be implemented with @within:
+# @within **
+</code></pre>
+
+<h1 id="default-visibility-config">Default Visibility Config</h1>
+
+<p>You can change the default visibility for resources in the config. See <a href="Env-Options#defaultvisibility"><code class="language-plaintext highlighter-rouge">datapack.env.defaultVisibility</code></a>
+for more information.</p>
+
+<h1 id="strict-check-configs">Strict Check Configs</h1>
+
+<p>You can enable several strict check configs to show diagnostics for undefined resources. 
+See <a href="Lint-Rules">Lint Rules</a> for more information.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"></a><br>The contents of this website, unless otherwise indicated, are licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			We have shamelessly stolen some of the website design from the <a href="https://fabricmc.net/">Fabric website</a>.</p>
+			<p style="font-size: 0.7em;">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</p>
+		</div>
+
+	</div>
+</footer>
+</body>
+
+</html>

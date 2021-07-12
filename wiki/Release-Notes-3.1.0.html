@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Release Notes 3.1.0 | SPYGlass</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Release Notes 3.1.0" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<meta property="og:description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<link rel="canonical" href="https://spyglassmc.com/wiki/Release-Notes-3.1.0.html" />
+<meta property="og:url" content="https://spyglassmc.com/wiki/Release-Notes-3.1.0.html" />
+<meta property="og:site_name" content="SPYGlass" />
+<script type="application/ld+json">
+{"description":"Development tools for vanilla Minecraft: Java Edition content creators.","url":"https://spyglassmc.com/wiki/Release-Notes-3.1.0.html","@type":"WebPage","headline":"Release Notes 3.1.0","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://spyglassmc.com/feed.xml" title="SPYGlass" /></head>
+<body><header class="site-header" role="banner">
+	<div class="wrapper"><a class="site-title" rel="author" href="/"><img src="/favicon.ico" height="30em"> SPYGlass</a><nav class="site-nav">
+				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+				<label for="nav-trigger">
+					<span class="menu-icon">
+						<svg viewBox="0 0 18 15" width="18px" height="15px">
+							<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+						</svg>
+					</span>
+				</label>
+
+				<div class="trigger"><a class="page-link" href="/blog/">Blog</a><a class="page-link" href="/discuss/">Discuss</a><a class="page-link" href="/localization/">Localization</a><a class="page-link" href="/usage/">Usage</a><a class="page-link" href="/wiki/">Wiki</a></div>
+			</nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Release Notes 3.1.0</h1>
+  </header>
+
+  <div class="post-content">
+    <ul>
+  <li><a href="#-data-pack-language-server-311">🔷 Data-pack Language Server 3.1.1</a>
+    <ul>
+      <li><a href="#-bugfixes-in-311">🐛 Bugfixes in 3.1.1</a></li>
+    </ul>
+  </li>
+  <li><a href="#-data-pack-language-server-310">🔷 Data-pack Language Server 3.1.0</a>
+    <ul>
+      <li><a href="#-features-in-310">✨ Features in 3.1.0</a>
+        <ul>
+          <li><a href="#support-for-117">Support for 1.17</a></li>
+          <li><a href="#other-features">Other Features</a></li>
+        </ul>
+      </li>
+      <li><a href="#-bugfixes-in-310">🐛 Bugfixes in 3.1.0</a></li>
+      <li><a href="#-future-plans">🕙 Future Plans</a></li>
+      <li><a href="#-thank-you">💛 Thank You</a></li>
+      <li><a href="#looking-to-contribute">Looking to contribute?</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="-data-pack-language-server-311">🔷 Data-pack Language Server 3.1.1</h1>
+
+<p>This version changed the default value of several <a href="Env-Options">Env Options</a> to the latest release, instead of the latest snapshot:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">cmdVersion</code>: default value is changed from <code class="language-plaintext highlighter-rouge">1.17</code> to <code class="language-plaintext highlighter-rouge">1.16</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">dataVersion</code>: default value is changed from <code class="language-plaintext highlighter-rouge">Latest snapshot</code> to <code class="language-plaintext highlighter-rouge">Latest release</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">jsonVersion</code>: default value is changed from <code class="language-plaintext highlighter-rouge">1.17</code> to <code class="language-plaintext highlighter-rouge">1.16</code>.</li>
+</ul>
+
+<h2 id="-bugfixes-in-311">🐛 Bugfixes in 3.1.1</h2>
+
+<p>See all known 4 bugs that were fixed in 3.1.1: <a href="https://github.com/SPGoding/datapack-language-server/issues?q=is%3Aissue+milestone%3A%22Release+3.1.1%22+label%3A%22%F0%9F%90%9B+bug%22+">query</a>.</p>
+
+<h1 id="-data-pack-language-server-310">🔷 Data-pack Language Server 3.1.0</h1>
+
+<p>This version provides support for new 1.17 features.</p>
+
+<h2 id="-features-in-310">✨ Features in 3.1.0</h2>
+
+<h3 id="support-for-117">Support for 1.17</h3>
+
+<p>New features added in 20w47a (the second snapshot of 1.17) have been fully supported. Change the versions 
+(<code class="language-plaintext highlighter-rouge">cmdVersion</code>, <code class="language-plaintext highlighter-rouge">dataVersion</code>, and <code class="language-plaintext highlighter-rouge">jsonVersion</code>) in <a href="Env-Options">Env Options</a> to <code class="language-plaintext highlighter-rouge">1.17</code> to enjoy <a href="https://minecraft.gamepedia.com/Item_modifier">item modifiers</a>,
+new loot table functions, and <a href="https://minecraft.gamepedia.com/Commands/item"><code class="language-plaintext highlighter-rouge">/item</code> command</a>!</p>
+
+<h3 id="other-features">Other Features</h3>
+
+<ul>
+  <li>An error will be shown when your <code class="language-plaintext highlighter-rouge">mcfunction</code> files isn’t in the correct directory (<code class="language-plaintext highlighter-rouge">data/&lt;namespace&gt;/functions/**/*.mcfunction</code>).</li>
+  <li>A new <a href="Code-Actions">code action</a> is added to replace all <code class="language-plaintext highlighter-rouge">/replaceitem</code> commands with <code class="language-plaintext highlighter-rouge">/item ... replace</code> commands.</li>
+</ul>
+
+<h2 id="-bugfixes-in-310">🐛 Bugfixes in 3.1.0</h2>
+
+<p>See all known 3 bugs that were fixed in 3.1.0: <a href="https://github.com/SPGoding/datapack-language-server/issues?q=is%3Aissue+milestone%3A%22Release+3.1.0%22+label%3A%22%F0%9F%90%9B+bug%22+">query</a>.</p>
+
+<h2 id="-future-plans">🕙 Future Plans</h2>
+
+<p>See all backlogged issues: <a href="https://github.com/SPGoding/datapack-language-server/issues?q=is%3Aissue+milestone%3ABacklog+is%3Aopen">query</a>.</p>
+
+<h2 id="-thank-you">💛 Thank You</h2>
+
+<p>A big <em>thank you</em> goes to these wonderful people! (sorted by the Unicode of names)</p>
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/Arcensoth"><img src="https://avatars2.githubusercontent.com/u/1885643?s=460&amp;u=6c40bfd2701329a442810831d3a2cf954c8cf5de&amp;v=4" width="64px;" alt="" /><br /><sub><b>Arcensoth</b></sub></a></td><td align="left"><a href="https://github.com/Arcensoth/mcdata" target="_blank" title="Dependency">⬆️ Maintains mcdata repository</a></td>
+    <td align="center"><a href="https://github.com/ChenCMD"><img src="https://avatars2.githubusercontent.com/u/46134240?s=460&amp;u=ca934b86e5189ea9c598a51358571e777e21aa2f&amp;v=4" width="64px;" alt="" /><br /><sub><b>ChenCMD</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues?q=author%3AChenCMD" target="_blank" title="Collaborator of the Project">💎 Collaborator</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Devon7925"><img src="https://avatars3.githubusercontent.com/u/22968971?s=400&amp;v=4" width="64px;" alt="" /><br /><sub><b>Devon7925</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/703" target="_blank" title="Bug reports">🐛 #703</a></td>
+    <td align="center"><a href="https://github.com/misode"><img src="https://avatars1.githubusercontent.com/u/17352009?s=460&amp;u=2813225036a78ea0c585fa5f9150d448c3a8ff8e&amp;v=4" width="64px;" alt="" /><br /><sub><b>Misode</b></sub></a></td><td align="left"><a href="https://github.com/misode/minecraft-schemas" target="_blank" title="Dependency">⬆️ Maintains minecraft-schemas repository</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/NeunEinser"><img src="https://avatars3.githubusercontent.com/u/12124394?s=460&amp;v=4" width="64px;" alt="" /><br /><sub><b>NeunEinser</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/736" target="_blank" title="Ideas, Planning, and Feedback">✨ #736</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/739" target="_blank" title="Bug reports">🐛 #739</a></td>
+    <td align="center"><a href="https://github.com/Yurihaia"><img src="https://avatars3.githubusercontent.com/u/17830663?s=400&amp;u=4959d74e027642f5a207dcd5e112005c5932b844&amp;v=4" width="64px;" alt="" /><br /><sub><b>Yurihaia</b></sub></a></td><td align="left"><a href="https://github.com/Yurihaia/mc-nbtdoc" target="_blank" title="Dependency">⬆️ Maintains mc-nbtdoc repository</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/zyjking"><img src="https://avatars2.githubusercontent.com/u/37742023?s=400&amp;v=4" width="64px;" alt="" /><br /><sub><b>zyjking</b></sub></a></td><td align="left"><a href="https://github.com/sponsors/SPGoding" target="_blank" title="Financial support">☕ Coffee</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+<p>This project follows the <a href="https://github.com/all-contributors/all-contributors">all-contributors</a> specification. Contributions of any kind are welcome!</p>
+
+<h2 id="looking-to-contribute">Looking to contribute?</h2>
+
+<p>Thanks a lot! You can consider <a href="https://github.com/SPGoding/datapack-language-server/blob/master/CONTRIBUTING.md">contributing</a>
+by <a href="https://github.com/sponsors/SPGoding">sponsoring</a>, <a href="https://github.com/SPGoding/datapack-language-server/issues/new">reporting bugs/sharing ideas</a>,
+or <a href="https://l10n.spgoding.com">helping localization</a>!</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"></a><br>The contents of this website, unless otherwise indicated, are licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			We have shamelessly stolen some of the website design from the <a href="https://fabricmc.net/">Fabric website</a>.</p>
+			<p style="font-size: 0.7em;">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</p>
+		</div>
+
+	</div>
+</footer>
+</body>
+
+</html>

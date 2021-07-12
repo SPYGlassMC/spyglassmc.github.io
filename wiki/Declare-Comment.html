@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Declare Comment | SPYGlass</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Declare Comment" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<meta property="og:description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<link rel="canonical" href="https://spyglassmc.com/wiki/Declare-Comment.html" />
+<meta property="og:url" content="https://spyglassmc.com/wiki/Declare-Comment.html" />
+<meta property="og:site_name" content="SPYGlass" />
+<script type="application/ld+json">
+{"description":"Development tools for vanilla Minecraft: Java Edition content creators.","url":"https://spyglassmc.com/wiki/Declare-Comment.html","@type":"WebPage","headline":"Declare Comment","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://spyglassmc.com/feed.xml" title="SPYGlass" /></head>
+<body><header class="site-header" role="banner">
+	<div class="wrapper"><a class="site-title" rel="author" href="/"><img src="/favicon.ico" height="30em"> SPYGlass</a><nav class="site-nav">
+				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+				<label for="nav-trigger">
+					<span class="menu-icon">
+						<svg viewBox="0 0 18 15" width="18px" height="15px">
+							<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+						</svg>
+					</span>
+				</label>
+
+				<div class="trigger"><a class="page-link" href="/blog/">Blog</a><a class="page-link" href="/discuss/">Discuss</a><a class="page-link" href="/localization/">Localization</a><a class="page-link" href="/usage/">Usage</a><a class="page-link" href="/wiki/">Wiki</a></div>
+			</nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Declare Comment</h1>
+  </header>
+
+  <div class="post-content">
+    <ul>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#history">History</a></li>
+</ul>
+
+<h1 id="introduction">Introduction</h1>
+
+<p><code class="language-plaintext highlighter-rouge">#declare</code> comments are a way to declare a resource which can be used to compute completions, rename symbols, 
+and find references/declarations. You can also use <code class="language-plaintext highlighter-rouge">#define</code> to replace <code class="language-plaintext highlighter-rouge">#declare</code> – they all
+work exactly the same.</p>
+
+<p>The game will treat declaration comments as normal comments and simply ignore them.</p>
+
+<p>Syntax: <code class="language-plaintext highlighter-rouge">#declare|#define &lt;type: string&gt; &lt;value: string&gt;</code></p>
+
+<p><img src="https://raw.githubusercontent.com/SPGoding/vscode-datapack-helper-plus/master/img/declaration-comments.png" alt="declaration-comments" /></p>
+
+<p>Here’s a table showing how to declare or define each type of resource:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Declaration</th>
+      <th>Definition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Advancement</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare advancement &lt;ID&gt;</code></td>
+      <td>An advancement file.</td>
+    </tr>
+    <tr>
+      <td>Biome</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/biome &lt;ID&gt;</code></td>
+      <td>A biome file.</td>
+    </tr>
+    <tr>
+      <td>Block Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag/block &lt;ID&gt;</code></td>
+      <td>A block tag file.</td>
+    </tr>
+    <tr>
+      <td>Bossbar</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare bossbar &lt;ID&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">bossbar add &lt;ID&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Configured Carver</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/configured_carver &lt;ID&gt;</code></td>
+      <td>A configured carver file.</td>
+    </tr>
+    <tr>
+      <td>Configured Feature</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/configured_feature &lt;ID&gt;</code></td>
+      <td>A configured feature file.</td>
+    </tr>
+    <tr>
+      <td>Configured Structure Feature</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/configured_structure_feature &lt;ID&gt;</code></td>
+      <td>A configured structure feature file.</td>
+    </tr>
+    <tr>
+      <td>Configured Surface Builder</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/configured_surface_builder &lt;ID&gt;</code></td>
+      <td>A configured surface builder file.</td>
+    </tr>
+    <tr>
+      <td>Dimension</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare dimension &lt;ID&gt;</code></td>
+      <td>A dimension file.</td>
+    </tr>
+    <tr>
+      <td>Dimension Type</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare dimension_type &lt;ID&gt;</code></td>
+      <td>A dimension type file.</td>
+    </tr>
+    <tr>
+      <td>Entity</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare entity &lt;ID&gt;</code></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Entity Type Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag/entity_type &lt;ID&gt;</code></td>
+      <td>An entity type tag file.</td>
+    </tr>
+    <tr>
+      <td>Fluid Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag/fluid &lt;ID&gt;</code></td>
+      <td>A fluid tag file.</td>
+    </tr>
+    <tr>
+      <td>Function</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare function &lt;ID&gt;</code></td>
+      <td>A function file.</td>
+    </tr>
+    <tr>
+      <td>Function Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag/function &lt;ID&gt;</code></td>
+      <td>A function tag file.</td>
+    </tr>
+    <tr>
+      <td>Item Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag/item &lt;ID&gt;</code></td>
+      <td>An item tag file.</td>
+    </tr>
+    <tr>
+      <td>Loot Table</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare loot_table &lt;ID&gt;</code></td>
+      <td>A loot table file.</td>
+    </tr>
+    <tr>
+      <td>Objective</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare objective &lt;ID&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">scoreboard objectives add &lt;ID&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Predicate</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare predicate &lt;ID&gt;</code></td>
+      <td>A predicate file.</td>
+    </tr>
+    <tr>
+      <td>Processor List</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/processor_list &lt;ID&gt;</code></td>
+      <td>A processor list file.</td>
+    </tr>
+    <tr>
+      <td>Recipe</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare recipe &lt;ID&gt;</code></td>
+      <td>A recipe file.</td>
+    </tr>
+    <tr>
+      <td>Score Holder</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare score_holder &lt;ID&gt;</code></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Storage</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare storage &lt;ID&gt;</code></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag &lt;ID&gt;</code></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Team</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare team &lt;ID&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">team add &lt;ID&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Template Pool</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/template_pool &lt;ID&gt;</code></td>
+      <td>A template pool file.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="history">History</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v1.1.0">1.1.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">#define</code> comment.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-3.0.0">3.0.0</a></td>
+      <td>Renamed <code class="language-plaintext highlighter-rouge">#define</code> to <code class="language-plaintext highlighter-rouge">#declare</code>. <br />Added <code class="language-plaintext highlighter-rouge">#define</code> as an alias of <code class="language-plaintext highlighter-rouge">#declare</code>. <br />All kind of resources can be declared.</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"></a><br>The contents of this website, unless otherwise indicated, are licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			We have shamelessly stolen some of the website design from the <a href="https://fabricmc.net/">Fabric website</a>.</p>
+			<p style="font-size: 0.7em;">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</p>
+		</div>
+
+	</div>
+</footer>
+</body>
+
+</html>

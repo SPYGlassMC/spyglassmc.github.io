@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Build | SPYGlass</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Build" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<meta property="og:description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<link rel="canonical" href="https://spyglassmc.com/wiki/Build.html" />
+<meta property="og:url" content="https://spyglassmc.com/wiki/Build.html" />
+<meta property="og:site_name" content="SPYGlass" />
+<script type="application/ld+json">
+{"description":"Development tools for vanilla Minecraft: Java Edition content creators.","url":"https://spyglassmc.com/wiki/Build.html","@type":"WebPage","headline":"Build","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://spyglassmc.com/feed.xml" title="SPYGlass" /></head>
+<body><header class="site-header" role="banner">
+	<div class="wrapper"><a class="site-title" rel="author" href="/"><img src="/favicon.ico" height="30em"> SPYGlass</a><nav class="site-nav">
+				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+				<label for="nav-trigger">
+					<span class="menu-icon">
+						<svg viewBox="0 0 18 15" width="18px" height="15px">
+							<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+						</svg>
+					</span>
+				</label>
+
+				<div class="trigger"><a class="page-link" href="/blog/">Blog</a><a class="page-link" href="/discuss/">Discuss</a><a class="page-link" href="/localization/">Localization</a><a class="page-link" href="/usage/">Usage</a><a class="page-link" href="/wiki/">Wiki</a></div>
+			</nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Build</h1>
+  </header>
+
+  <div class="post-content">
+    <p>You can build the <a href="https://marketplace.visualstudio.com/items?itemName=SPGoding.datapack-language-server">VS Code extension</a>
+yourself to experience the latest features <del>and bugs</del> without <a href="https://github.com/sponsors/SPGoding">sponsoring</a>.</p>
+
+<ul>
+  <li><a href="#install-nodejs">Install Node.js</a></li>
+  <li><a href="#clone-the-repositories">Clone the Repositories</a></li>
+  <li><a href="#install-node-modules">Install Node Modules</a></li>
+  <li><a href="#test-the-extension-without-packaging">Test the Extension without Packaging</a></li>
+  <li><a href="#start-the-extension-with-packaging">Start the Extension with Packaging</a>
+    <ul>
+      <li><a href="#install-vsce">Install vsce</a></li>
+      <li><a href="#packaging">Packaging</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="install-nodejs">Install Node.js</h1>
+
+<p><a href="https://nodejs.org">Node.js</a> is the runtime required for building the language server.</p>
+
+<p>You can download it from the official website: https://nodejs.org/en/download. LTS version should be good enough.</p>
+
+<h1 id="clone-the-repositories">Clone the Repositories</h1>
+
+<p>You can clone the repositories if you have <a href="https://git-scm.com">Git</a> installed:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/SPGoding/datapack-language-server.git
+git clone https://github.com/SPGoding/vscode-datapack-helper-plus.git
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">datapack-language-server</code> repository stores the code of the language server, while <code class="language-plaintext highlighter-rouge">vscode-datapack-helper-plus</code> 
+stores the code of the <a href="https://code.visualstudio.com">VS Code</a> extension.</p>
+
+<h1 id="install-node-modules">Install Node Modules</h1>
+
+<ol>
+  <li>Go in both repositories and execute <code class="language-plaintext highlighter-rouge">npm i</code> individually, which will install the necessary node modules
+for the language server and the extension to run.</li>
+  <li>Go in your local <code class="language-plaintext highlighter-rouge">datapack-language-server</code> repository, execute <code class="language-plaintext highlighter-rouge">npm run build</code> and <code class="language-plaintext highlighter-rouge">npm link</code>.</li>
+  <li>Switch to your local <code class="language-plaintext highlighter-rouge">vscode-datapack-helper-plus</code> repository, execute <code class="language-plaintext highlighter-rouge">npm link @spgoding/datapack-language-server</code>.</li>
+</ol>
+
+<h1 id="test-the-extension-without-packaging">Test the Extension without Packaging</h1>
+
+<p>You can start the extension in VS Code directly while developing.</p>
+
+<ol>
+  <li>Go in your local <code class="language-plaintext highlighter-rouge">datapack-language-server</code> repository.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">npm run build</code>. The TypeScript code will be compiled to JavaScript. Alternatively you can
+run <code class="language-plaintext highlighter-rouge">npm run watch</code> which keeps compiling the code as long as you make changes to the TypeScript code.</li>
+  <li>Switch to your local <code class="language-plaintext highlighter-rouge">vscode-datapack-helper-plus</code> repository.</li>
+  <li>Open <a href="https://code.visualstudio.com">VS Code</a> there.</li>
+  <li>Press F5.</li>
+</ol>
+
+<h1 id="start-the-extension-with-packaging">Start the Extension with Packaging</h1>
+
+<p>You can also start the extension by packaging it with vsce. You can distribute the packaged extension to others.</p>
+
+<h2 id="install-vsce">Install vsce</h2>
+
+<blockquote>
+  <p><a href="https://github.com/Microsoft/vsce">vsce</a>, short for “Visual Studio Code Extensions”, is a command-line tool for packaging, publishing and managing VS Code extensions.
+– <a href="https://code.visualstudio.com/api/working-with-extensions/publishing-extension">VS Code’s documentation</a></p>
+</blockquote>
+
+<p>You can install vsce by running:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install -g vsce
+</code></pre></div></div>
+
+<h2 id="packaging">Packaging</h2>
+
+<ol>
+  <li>Go in your local <code class="language-plaintext highlighter-rouge">datapack-language-server</code> repository.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">npm run build</code>. The TypeScript code will be compiled to JavaScript. Alternatively you can
+run <code class="language-plaintext highlighter-rouge">npm run watch</code> which keeps compiling the code as long as you make changes to the TypeScript code.</li>
+  <li>Switch to your local <code class="language-plaintext highlighter-rouge">vscode-datapack-helper-plus</code> repository.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">npm run build</code>.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">vsce package</code>.</li>
+</ol>
+
+<p>After a few minutes, you will get a packaged extension named <code class="language-plaintext highlighter-rouge">datapack-language-server-VERSION.vsix</code> 
+in the root directory. You can now <a href="https://code.visualstudio.com/docs/editor/extension-gallery#_install-from-a-vsix">install the vsix</a> 
+file to play with it.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"></a><br>The contents of this website, unless otherwise indicated, are licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			We have shamelessly stolen some of the website design from the <a href="https://fabricmc.net/">Fabric website</a>.</p>
+			<p style="font-size: 0.7em;">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</p>
+		</div>
+
+	</div>
+</footer>
+</body>
+
+</html>

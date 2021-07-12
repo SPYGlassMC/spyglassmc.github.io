@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Code Actions | SPYGlass</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Code Actions" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<meta property="og:description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<link rel="canonical" href="https://spyglassmc.com/wiki/Code-Actions.html" />
+<meta property="og:url" content="https://spyglassmc.com/wiki/Code-Actions.html" />
+<meta property="og:site_name" content="SPYGlass" />
+<script type="application/ld+json">
+{"description":"Development tools for vanilla Minecraft: Java Edition content creators.","url":"https://spyglassmc.com/wiki/Code-Actions.html","@type":"WebPage","headline":"Code Actions","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://spyglassmc.com/feed.xml" title="SPYGlass" /></head>
+<body><header class="site-header" role="banner">
+	<div class="wrapper"><a class="site-title" rel="author" href="/"><img src="/favicon.ico" height="30em"> SPYGlass</a><nav class="site-nav">
+				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+				<label for="nav-trigger">
+					<span class="menu-icon">
+						<svg viewBox="0 0 18 15" width="18px" height="15px">
+							<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+						</svg>
+					</span>
+				</label>
+
+				<div class="trigger"><a class="page-link" href="/blog/">Blog</a><a class="page-link" href="/discuss/">Discuss</a><a class="page-link" href="/localization/">Localization</a><a class="page-link" href="/usage/">Usage</a><a class="page-link" href="/wiki/">Wiki</a></div>
+			</nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Code Actions</h1>
+  </header>
+
+  <div class="post-content">
+    <ul>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#toggle">Toggle</a></li>
+  <li><a href="#list-of-code-actions">List of Code Actions</a></li>
+  <li><a href="#history">History</a></li>
+</ul>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Code actions is a way to provide quickfixes and refactor operations for your commands.</p>
+
+<p><img src="https://raw.githubusercontent.com/SPGoding/vscode-datapack-helper-plus/master/img/code-action.gif" alt="code-action" /></p>
+
+<h1 id="toggle">Toggle</h1>
+
+<p>You can toggle the <code class="language-plaintext highlighter-rouge">datapack.features.codeActions</code> setting to enable/disable code actions of DHP.</p>
+
+<h1 id="list-of-code-actions">List of Code Actions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Name</th>
+      <th>Ex. Before</th>
+      <th>Ex. After</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">block-state-sort-keys</code></td>
+      <td>Sort block state</td>
+      <td>-</td>
+      <td>To the order specified in <a href="https://github.com/SPGoding/datapack-language-server/wiki/blockStateSortKeys"><code class="language-plaintext highlighter-rouge">datapack.lint.blockStateSortKeys</code></a></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">command-replaceitem</code></td>
+      <td>Update this command to /item … replace</td>
+      <td><code class="language-plaintext highlighter-rouge">replaceitem entity @s hotbar.0 stone</code></td>
+      <td><code class="language-plaintext highlighter-rouge">item entity @s hotbar.0 replace stone</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fix-file</code></td>
+      <td>Fix all auto-fixable problems in this file</td>
+      <td>A lot of errors.</td>
+      <td>Less errors in this file.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fix-workspace</code></td>
+      <td>Fix all auto-fixable problems in the workspace</td>
+      <td>A lot of errors.</td>
+      <td>Less errors in the workspace.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id-attribute-datafix</code></td>
+      <td>Update this attribute name to 1.16</td>
+      <td><code class="language-plaintext highlighter-rouge">"generic.maxHealth"</code></td>
+      <td><code class="language-plaintext highlighter-rouge">"generic.max_health"</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id-complete-default-namespace</code></td>
+      <td>Complete default namespace</td>
+      <td><code class="language-plaintext highlighter-rouge">foo</code></td>
+      <td><code class="language-plaintext highlighter-rouge">minecraft:foo</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id-create-file</code></td>
+      <td>Create %0% in the same data pack</td>
+      <td>A file that doesn’t exist.</td>
+      <td>The file is created.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id-omit-default-namespace</code></td>
+      <td>Omit default namespace</td>
+      <td><code class="language-plaintext highlighter-rouge">minecraft:foo</code></td>
+      <td><code class="language-plaintext highlighter-rouge">foo</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id-zombified-piglin-datafix</code></td>
+      <td>Change this ID to Zombified Piglin’s</td>
+      <td><code class="language-plaintext highlighter-rouge">zombie_pigman</code></td>
+      <td><code class="language-plaintext highlighter-rouge">zombified_piglin</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt-compound-sort-keys</code></td>
+      <td>Sort NBT compound tag</td>
+      <td>-</td>
+      <td>To the order specified in <a href="https://github.com/SPGoding/datapack-language-server/wiki/nbtCompoundSortKeys"><code class="language-plaintext highlighter-rouge">datapack.lint.nbtCompoundSortKeys</code></a></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt-type-to-byte</code></td>
+      <td>Convert to an NBT byte tag</td>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1b</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt-type-to-double</code></td>
+      <td>Convert to an NBT double tag</td>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1d</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt-type-to-float</code></td>
+      <td>Convert to an NBT float tag</td>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1f</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt-type-to-int</code></td>
+      <td>Convert to an NBT int tag</td>
+      <td><code class="language-plaintext highlighter-rouge">1s</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt-type-to-long</code></td>
+      <td>Convert to an NBT long tag</td>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1L</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt-type-to-short</code></td>
+      <td>Convert to an NBT short tag</td>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1s</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt-uuid-datafix</code></td>
+      <td>Update this UUID to 1.16</td>
+      <td><code class="language-plaintext highlighter-rouge">{UUIDMost:1L,UUIDLeast:2L}</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{UUID:[I;0,1,0,2]}</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">selector-sort-keys</code></td>
+      <td>Sort selector argument</td>
+      <td>-</td>
+      <td>To the order specified in <a href="https://github.com/SPGoding/datapack-language-server/wiki/selectorSortKeys"><code class="language-plaintext highlighter-rouge">datapack.lint.selectorSortKeys</code></a></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">string-double-quote</code></td>
+      <td>Quote this string with double quotation marks</td>
+      <td><code class="language-plaintext highlighter-rouge">'foo'</code></td>
+      <td><code class="language-plaintext highlighter-rouge">"foo"</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">string-single-quote</code></td>
+      <td>Quote this string with single quotation marks</td>
+      <td><code class="language-plaintext highlighter-rouge">"foo"</code></td>
+      <td><code class="language-plaintext highlighter-rouge">'foo'</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">string-unquote</code></td>
+      <td>Unquote this string</td>
+      <td><code class="language-plaintext highlighter-rouge">"foo"</code></td>
+      <td><code class="language-plaintext highlighter-rouge">foo</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">vector-align-0.0</code></td>
+      <td>Align this vector to block origin</td>
+      <td><code class="language-plaintext highlighter-rouge">1.2 3 4</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1.2 3.0 4.0</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">vector-align-0.5</code></td>
+      <td>Align this vector to block center</td>
+      <td><code class="language-plaintext highlighter-rouge">1.2 3 4</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1.2 3.5 4.5</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="history">History</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-2.0.0">2.0.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">block-state-sort-keys</code>, <code class="language-plaintext highlighter-rouge">id-attribute-datafix</code>, <code class="language-plaintext highlighter-rouge">id-complete-default-namespace</code>, <code class="language-plaintext highlighter-rouge">id-omit-default-namespace</code>, <code class="language-plaintext highlighter-rouge">nbt-compound-sort-keys</code>, <code class="language-plaintext highlighter-rouge">nbt-type-to-byte</code>, <code class="language-plaintext highlighter-rouge">nbt-type-to-double</code>, <code class="language-plaintext highlighter-rouge">nbt-type-to-float</code>, <code class="language-plaintext highlighter-rouge">nbt-type-to-int</code>, <code class="language-plaintext highlighter-rouge">nbt-type-to-long</code>, <code class="language-plaintext highlighter-rouge">nbt-type-to-short</code>, <code class="language-plaintext highlighter-rouge">nbt-uuid-datafix</code>, <code class="language-plaintext highlighter-rouge">selector-sort-keys</code>, <code class="language-plaintext highlighter-rouge">string-double-quote</code>, <code class="language-plaintext highlighter-rouge">string-single-quote</code>, <code class="language-plaintext highlighter-rouge">string-unquote</code>, <code class="language-plaintext highlighter-rouge">vector-align-0.0</code>, and <code class="language-plaintext highlighter-rouge">vector-align-0.5</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-2.1.0">2.1.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">fix-file</code>, <code class="language-plaintext highlighter-rouge">fix-workspace</code>, and <code class="language-plaintext highlighter-rouge">id-zombified-piglin-datafix</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-3.0.0">3.0.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">id-create-file</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-3.1.0">3.1.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">command-replaceitem</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"></a><br>The contents of this website, unless otherwise indicated, are licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			We have shamelessly stolen some of the website design from the <a href="https://fabricmc.net/">Fabric website</a>.</p>
+			<p style="font-size: 0.7em;">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</p>
+		</div>
+
+	</div>
+</footer>
+</body>
+
+</html>

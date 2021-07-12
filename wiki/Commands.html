@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Commands | SPYGlass</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Commands" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<meta property="og:description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<link rel="canonical" href="https://spyglassmc.com/wiki/Commands.html" />
+<meta property="og:url" content="https://spyglassmc.com/wiki/Commands.html" />
+<meta property="og:site_name" content="SPYGlass" />
+<script type="application/ld+json">
+{"description":"Development tools for vanilla Minecraft: Java Edition content creators.","url":"https://spyglassmc.com/wiki/Commands.html","@type":"WebPage","headline":"Commands","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://spyglassmc.com/feed.xml" title="SPYGlass" /></head>
+<body><header class="site-header" role="banner">
+	<div class="wrapper"><a class="site-title" rel="author" href="/"><img src="/favicon.ico" height="30em"> SPYGlass</a><nav class="site-nav">
+				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+				<label for="nav-trigger">
+					<span class="menu-icon">
+						<svg viewBox="0 0 18 15" width="18px" height="15px">
+							<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+						</svg>
+					</span>
+				</label>
+
+				<div class="trigger"><a class="page-link" href="/blog/">Blog</a><a class="page-link" href="/discuss/">Discuss</a><a class="page-link" href="/localization/">Localization</a><a class="page-link" href="/usage/">Usage</a><a class="page-link" href="/wiki/">Wiki</a></div>
+			</nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Commands</h1>
+  </header>
+
+  <div class="post-content">
+    <ul>
+  <li><a href="#list-of-commands">List of Commands</a>
+    <ul>
+      <li><a href="#datapackcreatefile"><code class="language-plaintext highlighter-rouge">datapack.createFile</code></a>
+        <ul>
+          <li><a href="#arguments">Arguments</a></li>
+        </ul>
+      </li>
+      <li><a href="#datapackevaludatejavascript"><code class="language-plaintext highlighter-rouge">datapack.evaludateJavaScript</code></a></li>
+      <li><a href="#datapackfixfile"><code class="language-plaintext highlighter-rouge">datapack.fixFile</code></a>
+        <ul>
+          <li><a href="#arguments-1">Arguments</a></li>
+        </ul>
+      </li>
+      <li><a href="#datapackfixworkspace"><code class="language-plaintext highlighter-rouge">datapack.fixWorkspace</code></a>
+        <ul>
+          <li><a href="#arguments-2">Arguments</a></li>
+        </ul>
+      </li>
+      <li><a href="#datapackredownloaddata"><code class="language-plaintext highlighter-rouge">datapack.redownloadData</code></a></li>
+      <li><a href="#datapackregeneratecache"><code class="language-plaintext highlighter-rouge">datapack.regenerateCache</code></a>
+        <ul>
+          <li><a href="#arguments-3">Arguments</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#history">History</a></li>
+</ul>
+
+<h1 id="list-of-commands">List of Commands</h1>
+
+<p>These commands are all server-side commands. Not every server-side command necessarily has a corresponding client-side command.</p>
+
+<h2 id="datapackcreatefile"><code class="language-plaintext highlighter-rouge">datapack.createFile</code></h2>
+
+<p>Create a file in the specified data pack.</p>
+
+<h3 id="arguments">Arguments</h3>
+
+<ul>
+  <li>[0] (string) The <a href="Cache-Type">file cache type</a> of the file.</li>
+  <li>[1] (string) The identity of the file. It could be a tag ID starting with the hash symbol (<code class="language-plaintext highlighter-rouge">#</code>).</li>
+  <li>[2] (string) The URI of the data pack root.</li>
+</ul>
+
+<h2 id="datapackevaludatejavascript"><code class="language-plaintext highlighter-rouge">datapack.evaludateJavaScript</code></h2>
+
+<p>🚧 This command is planned but haven’t been finished.</p>
+
+<h2 id="datapackfixfile"><code class="language-plaintext highlighter-rouge">datapack.fixFile</code></h2>
+
+<p>Fix all auto-fixables problems in the specified file.</p>
+
+<h3 id="arguments-1">Arguments</h3>
+
+<ul>
+  <li>[0] (string) The URI of the file.</li>
+</ul>
+
+<h2 id="datapackfixworkspace"><code class="language-plaintext highlighter-rouge">datapack.fixWorkspace</code></h2>
+
+<p>Fix all auto-fixables problems in the workspace.</p>
+
+<h3 id="arguments-2">Arguments</h3>
+
+<p>This command does not have any arguments.</p>
+
+<h2 id="datapackredownloaddata"><code class="language-plaintext highlighter-rouge">datapack.redownloadData</code></h2>
+
+<p>🚧 This command is planned but haven’t been finished.</p>
+
+<h2 id="datapackregeneratecache"><code class="language-plaintext highlighter-rouge">datapack.regenerateCache</code></h2>
+
+<p>Regenerate the cache file for the workspace.</p>
+
+<h3 id="arguments-3">Arguments</h3>
+
+<p>This command does not have any arguments.</p>
+
+<h1 id="history">History</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v1.13.0">1.13.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">datapack.regenerateCache</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-2.1.0">2.1.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">datapack.fixFile</code> and <code class="language-plaintext highlighter-rouge">datapack.fixWorkspace</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/SPGoding/datapack-language-server/wiki/Release-Notes-3.0.0">3.0.0</a></td>
+      <td>Added <code class="language-plaintext highlighter-rouge">datapack.createFile</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"></a><br>The contents of this website, unless otherwise indicated, are licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			We have shamelessly stolen some of the website design from the <a href="https://fabricmc.net/">Fabric website</a>.</p>
+			<p style="font-size: 0.7em;">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</p>
+		</div>
+
+	</div>
+</footer>
+</body>
+
+</html>

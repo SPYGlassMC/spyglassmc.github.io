@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Parsing Entities and Score Holders | SPYGlass</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Parsing Entities and Score Holders" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Intro" />
+<meta property="og:description" content="Intro" />
+<link rel="canonical" href="https://spyglassmc.com/develop/2021/04/30/parsing-entities-and-score-holders.html" />
+<meta property="og:url" content="https://spyglassmc.com/develop/2021/04/30/parsing-entities-and-score-holders.html" />
+<meta property="og:site_name" content="SPYGlass" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-30T00:00:00+00:00" />
+<script type="application/ld+json">
+{"description":"Intro","url":"https://spyglassmc.com/develop/2021/04/30/parsing-entities-and-score-holders.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://spyglassmc.com/develop/2021/04/30/parsing-entities-and-score-holders.html"},"headline":"Parsing Entities and Score Holders","dateModified":"2021-04-30T00:00:00+00:00","datePublished":"2021-04-30T00:00:00+00:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://spyglassmc.com/feed.xml" title="SPYGlass" /></head>
+<body><header class="site-header" role="banner">
+	<div class="wrapper"><a class="site-title" rel="author" href="/"><img src="/favicon.ico" height="30em"> SPYGlass</a><nav class="site-nav">
+				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+				<label for="nav-trigger">
+					<span class="menu-icon">
+						<svg viewBox="0 0 18 15" width="18px" height="15px">
+							<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+						</svg>
+					</span>
+				</label>
+
+				<div class="trigger"><a class="page-link" href="/blog/">Blog</a><a class="page-link" href="/discuss/">Discuss</a><a class="page-link" href="/localization/">Localization</a><a class="page-link" href="/usage/">Usage</a><a class="page-link" href="/wiki/">Wiki</a></div>
+			</nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Parsing Entities and Score Holders</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2021-04-30T00:00:00+00:00" itemprop="datePublished">Apr 30, 2021
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h1 id="intro">Intro</h1>
+
+<p><a href="https://minecraft.fandom.com/wiki/Argument_types#minecraft:entity"><code class="language-plaintext highlighter-rouge">minecraft:entity</code></a> and <a href="https://minecraft.fandom.com/wiki/Argument_types#minecraft:score_holder"><code class="language-plaintext highlighter-rouge">minecraft:score_holder</code></a>
+are the two most complicated parsers used in <em>Minecraft: Java Edition</em> command system, at least in my opinion. This article
+tries to document some notable things regarding parsing such arguments.</p>
+
+<h1 id="uuid">UUID</h1>
+
+<p>Both <code class="language-plaintext highlighter-rouge">minecraft:entity</code> and <code class="language-plaintext highlighter-rouge">minecraft:score_holder</code> seem to accept UUIDs. However, the ways they parse UUIDs are not the
+same - they’re actually quite different. For <code class="language-plaintext highlighter-rouge">entity</code>, UUIDs can be contained in both unquoted strings and quoted strings,
+and will be parsed by Java’s built-in <code class="language-plaintext highlighter-rouge">UUID.fromString</code> method. For <code class="language-plaintext highlighter-rouge">score_holder</code>, however, UUIDs are just treated like
+fake names, meaning that <code class="language-plaintext highlighter-rouge">01-1-1-1-1</code> and <code class="language-plaintext highlighter-rouge">1-1-1-1-1</code> are seen as two different UUIDs in your <code class="language-plaintext highlighter-rouge">/scoreboard</code> commands.</p>
+
+<h2 id="javautiluuidfromstring"><code class="language-plaintext highlighter-rouge">java.util.UUID.fromString</code></h2>
+
+<p>Unlike what we’ve been told about UUID’s format (<code class="language-plaintext highlighter-rouge">8-4-4-4-12</code>), the requirement of Java’s <code class="language-plaintext highlighter-rouge">UUID.fromString</code> method is
+quite loose[1]. In fact, any strings containing five segments separated by <code class="language-plaintext highlighter-rouge">-</code> where each segment is a hexadecimal
+number representable in <code class="language-plaintext highlighter-rouge">Int64</code> are acceptable. SPYGlass uses something similar to the following TypeScript code to
+achieve the same effect:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">LongMax</span><span class="p">:</span> <span class="nx">bigint</span> <span class="o">=</span> <span class="mi">9223372036854775807</span><span class="nx">n</span>
+<span class="kr">declare</span> <span class="kd">const</span> <span class="nx">input</span><span class="p">:</span> <span class="kr">string</span>
+
+<span class="nx">assert</span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/^</span><span class="se">[</span><span class="sr">0-9a-f</span><span class="se">]</span><span class="sr">+-</span><span class="se">[</span><span class="sr">0-9a-f</span><span class="se">]</span><span class="sr">+-</span><span class="se">[</span><span class="sr">0-9a-f</span><span class="se">]</span><span class="sr">+-</span><span class="se">[</span><span class="sr">0-9a-f</span><span class="se">]</span><span class="sr">+-</span><span class="se">[</span><span class="sr">0-9a-f</span><span class="se">]</span><span class="sr">+$/i</span><span class="p">))</span>
+<span class="kd">const</span> <span class="nx">parts</span><span class="p">:</span> <span class="nx">bigint</span><span class="p">[]</span> <span class="o">=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="s1">-</span><span class="dl">'</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">BigInt</span><span class="p">(</span><span class="s2">`0x</span><span class="p">${</span><span class="nx">p</span><span class="p">}</span><span class="s2">`</span><span class="p">))</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">parts</span><span class="p">.</span><span class="nx">every</span><span class="p">(</span><span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">p</span> <span class="o">&lt;=</span> <span class="nx">LongMax</span><span class="p">))</span>
+<span class="kd">const</span> <span class="nx">mostSignificantBits</span><span class="p">:</span> <span class="nx">bigint</span> <span class="o">=</span> <span class="nx">BigInt</span><span class="p">.</span><span class="nx">asIntN</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">32</span><span class="nx">n</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="nx">n</span><span class="p">)</span> <span class="o">|</span> <span class="nx">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="kd">const</span> <span class="nx">leastSignificantBits</span><span class="p">:</span> <span class="nx">bigint</span> <span class="o">=</span> <span class="nx">BigInt</span><span class="p">.</span><span class="nx">asIntN</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="nx">parts</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">48</span><span class="nx">n</span><span class="p">)</span> <span class="o">|</span> <span class="nx">parts</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h1 id="player-name">Player Name</h1>
+
+<p>Both <code class="language-plaintext highlighter-rouge">entity</code> and <code class="language-plaintext highlighter-rouge">score_holder</code>, again, achieve parsing player names differently. For <code class="language-plaintext highlighter-rouge">entity</code>, the player name can be
+either unquoted or quoted, and the length of the value must be between <code class="language-plaintext highlighter-rouge">1</code> and <code class="language-plaintext highlighter-rouge">16</code>. For <code class="language-plaintext highlighter-rouge">score_holder</code>, the parser
+reads everything literally until it hits a space (<code class="language-plaintext highlighter-rouge"> </code>) or the end of the command; although the parser itself doesn’t have limitations at
+the length of the value, it’s still limited between <code class="language-plaintext highlighter-rouge">1</code> and <code class="language-plaintext highlighter-rouge">40</code> thanks to Brigadier and a check in
+<code class="language-plaintext highlighter-rouge">net.minecraft.world.scores.Scoreboard#getOrCreatePlayerScore</code> (Mojang mappings, 21w15a).</p>
+
+<h1 id="entity-selector">Entity Selector</h1>
+
+<p>Here comes the fun part. An entity selector must begin with <code class="language-plaintext highlighter-rouge">@</code>, followed by one of the selector variables (<code class="language-plaintext highlighter-rouge">p</code>, <code class="language-plaintext highlighter-rouge">a</code>, <code class="language-plaintext highlighter-rouge">r</code>, <code class="language-plaintext highlighter-rouge">s</code>, or <code class="language-plaintext highlighter-rouge">e</code>).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Result        (Pseudocode)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">p</code></td>
+      <td><code class="language-plaintext highlighter-rouge">limit = 1; playersOnly = true; sort = nearest; type = 'minecraft:player'</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">a</code></td>
+      <td><code class="language-plaintext highlighter-rouge">limit = Integer.MAX_VALUE; playersOnly = true; sort = arbitrary; type = 'minecraft:player'</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">r</code></td>
+      <td><code class="language-plaintext highlighter-rouge">limit = 1; playersOnly = true; sort = random; type = 'minecraft:player'</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">s</code></td>
+      <td><code class="language-plaintext highlighter-rouge">limit = 1; playersOnly = false; currentEntity = true;</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">e</code></td>
+      <td><code class="language-plaintext highlighter-rouge">limit = Integer.MAX_VALUE; playersOnly = false; sort = arbitrary; addPredicate(e =&gt; e.isAlive())</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>It then may have an optional arguments part, beginning with <code class="language-plaintext highlighter-rouge">[</code> and ending with <code class="language-plaintext highlighter-rouge">]</code>. Properties in the list are separated with commas (<code class="language-plaintext highlighter-rouge">,</code>),
+and trailing commas are surprisingly valid. Keys can be either unquoted or quoted, while rules for values vary a lot. Here is a comprehensive
+table showing rules and effects of all entity selector arguments:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Value</th>
+      <th>Applicable When…</th>
+      <th>Result (Pseudocode)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">advancements=</code></td>
+      <td>A map (<code class="language-plaintext highlighter-rouge">{</code>, <code class="language-plaintext highlighter-rouge">=</code>, <code class="language-plaintext highlighter-rouge">,</code>, <code class="language-plaintext highlighter-rouge">}</code>) from <code class="language-plaintext highlighter-rouge">minecraft:resource_location{category: 'advancement'}</code> to either Brigadier booleans or “maps (<code class="language-plaintext highlighter-rouge">{</code>, <code class="language-plaintext highlighter-rouge">=</code>, <code class="language-plaintext highlighter-rouge">,</code>, <code class="language-plaintext highlighter-rouge">}</code>) from unquoted Brigadier strings to Brigadier booleans with trailing commas allowed” with trailing commas allowed</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">advancements=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; e.advancements justCheckIfItSomehowMagicallyMatches &lt;value&gt;)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">distance=</code></td>
+      <td>Non-negative <code class="language-plaintext highlighter-rouge">minecraft:float_range</code></td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">distance=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">distance = &lt;value&gt;; dimensionLimited = true</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gamemode=</code></td>
+      <td>An unquoted Brigadier string of value <code class="language-plaintext highlighter-rouge">adventure</code>, <code class="language-plaintext highlighter-rouge">creative</code>, <code class="language-plaintext highlighter-rouge">spectator</code>, or <code class="language-plaintext highlighter-rouge">survival</code></td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">gamemode=</code> or <code class="language-plaintext highlighter-rouge">gamemode=!</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; e is Player &amp;&amp; e.gamemode === &lt;value&gt;); playersOnly = true</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gamemode=!</code></td>
+      <td>An unquoted Brigadier string of value <code class="language-plaintext highlighter-rouge">adventure</code>, <code class="language-plaintext highlighter-rouge">creative</code>, <code class="language-plaintext highlighter-rouge">spectator</code>, or <code class="language-plaintext highlighter-rouge">survival</code></td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">gamemode=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; e is Player &amp;&amp; e.gamemode !== &lt;value&gt;); playersOnly = true</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">level=</code></td>
+      <td>Non-negative <code class="language-plaintext highlighter-rouge">minecraft:int_range</code></td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">level=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; e is Player &amp;&amp; e.level in &lt;value&gt;); playersOnly = true</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">limit=</code></td>
+      <td>A Brigadier integer greater than 0</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">limit=</code> and is not <code class="language-plaintext highlighter-rouge">@s</code></td>
+      <td><code class="language-plaintext highlighter-rouge">limit = &lt;value&gt;</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">name=</code></td>
+      <td>A Brigadier string (unquoted or quoted)</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">name=</code> or <code class="language-plaintext highlighter-rouge">name=!</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; e.name === &lt;value&gt;)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">name=!</code></td>
+      <td>A Brigadier string (unquoted or quoted)</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">name=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; e.name !== &lt;value&gt;)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">nbt:compound</code></td>
+      <td>Always</td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; e.nbt matches &lt;value&gt;)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt=!</code></td>
+      <td><code class="language-plaintext highlighter-rouge">nbt:compound</code></td>
+      <td>Always</td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; e.nbt !matches &lt;value&gt;)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">predicate=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">minecraft:resource_location{category: 'predicate'}</code></td>
+      <td>Always</td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(&lt;value&gt;.fillInContext())</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">predicate=!</code></td>
+      <td><code class="language-plaintext highlighter-rouge">minecraft:resource_location{category: 'predicate'}</code></td>
+      <td>Always</td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(&lt;value&gt;.fillInContext().invert())</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scores=</code></td>
+      <td>A map (<code class="language-plaintext highlighter-rouge">{</code>, <code class="language-plaintext highlighter-rouge">=</code>, <code class="language-plaintext highlighter-rouge">,</code>, <code class="language-plaintext highlighter-rouge">}</code>) from unquoted Brigadier strings to <code class="language-plaintext highlighter-rouge">minecraft:int_range</code> with trailing commas allowed</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">scores=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; &lt;value&gt;.every(([objective, range]) =&gt; e.scores[objective] in range))</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sort=</code></td>
+      <td>An unquoted Brigadier string of value <code class="language-plaintext highlighter-rouge">arbitrary</code>, <code class="language-plaintext highlighter-rouge">furthest</code>, <code class="language-plaintext highlighter-rouge">nearest</code>, or <code class="language-plaintext highlighter-rouge">random</code></td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">sort=</code> and is not <code class="language-plaintext highlighter-rouge">@s</code></td>
+      <td><code class="language-plaintext highlighter-rouge">sort = &lt;value&gt;</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tag=</code></td>
+      <td>An unquoted Brigadier string</td>
+      <td>Always</td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; &lt;value&gt; === '' ? e.tags.length === 0 : e.tags.includes(&lt;value&gt;))</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tag=!</code></td>
+      <td>An unquoted Brigadier string</td>
+      <td>Always</td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; &lt;value&gt; === '' ? e.tags.length !== 0 : !e.tags.includes(&lt;value&gt;))</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">team=</code></td>
+      <td>An unquoted Brigadier string</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">team=</code> or <code class="language-plaintext highlighter-rouge">team=!</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; (e.team ?? '') === &lt;value&gt;)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">team=!</code></td>
+      <td>An unquoted Brigadier string</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">team=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; (e.team ?? '') !== &lt;value&gt;)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">type=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">minecraft:resource_location{category: 'entity_type', allowTag: true}</code></td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">type=</code> (excluding entity type tags) or <code class="language-plaintext highlighter-rouge">type=!</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; &lt;value&gt; is Tag ? e.type in (&lt;value&gt; ?? []) : e.type === &lt;value&gt;); if (&lt;value&gt; === 'minecraft:player') playersOnly = true; if (&lt;value&gt; !is Tag) type = &lt;value&gt;</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">type=!</code></td>
+      <td><code class="language-plaintext highlighter-rouge">minecraft:resource_location{category: 'entity_type', allowTag: true}</code></td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">type=</code> (excluding entity type tags)</td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; &lt;value&gt; is Tag ? e.type !in (&lt;value&gt; ?? []) : e.type !== &lt;value&gt;)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">x=</code></td>
+      <td>A Brigadier double</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">x=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">x = &lt;value&gt;; dimensionLimited = true</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">y=</code></td>
+      <td>A Brigadier double</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">y=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">y = &lt;value&gt;; dimensionLimited = true</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">z=</code></td>
+      <td>A Brigadier double</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">z=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">z = &lt;value&gt;; dimensionLimited = true</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dx=</code></td>
+      <td>A Brigadier double</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">dx=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">dx = &lt;value&gt;; dimensionLimited = true</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dy=</code></td>
+      <td>A Brigadier double</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">dy=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">dy = &lt;value&gt;; dimensionLimited = true</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dz=</code></td>
+      <td>A Brigadier double</td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">dz=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">dz = &lt;value&gt;; dimensionLimited = true</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">x_rotation=</code></td>
+      <td>Wrapped <code class="language-plaintext highlighter-rouge">minecraft:float_range</code></td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">x_rotation=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; e.x_rotation wrappedIn &lt;value&gt;)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">y_rotation=</code></td>
+      <td>Wrapped <code class="language-plaintext highlighter-rouge">minecraft:float_range</code></td>
+      <td>No existing <code class="language-plaintext highlighter-rouge">y_rotation=</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addPredicate(e =&gt; e.y_rotation wrappedIn &lt;value&gt;)</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Note:</p>
+<ul>
+  <li>Brigadier strings, no matter unquoted or quoted, are all emptyable, unless otherwise noticed.</li>
+</ul>
+
+<h1 id="outro">Outro</h1>
+
+<p>I actually didn’t plan to write such an article, but my notes kept getting more interesting as I was exploring the code.
+Anyways, <em>Minecraft</em>’s command parsers are full of inconsistencies. @Mojang, please fix your game, this is virtually unplayable!!111!1</p>
+
+<p>[1]: <a href="http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/default/src/share/classes/java/util/UUID.java">view <code class="language-plaintext highlighter-rouge">src/share/classes/java/util/UUID.java</code></a></p>
+
+  </div><a class="u-url" href="/develop/2021/04/30/parsing-entities-and-score-holders.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"></a><br>The contents of this website, unless otherwise indicated, are licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			We have shamelessly stolen some of the website design from the <a href="https://fabricmc.net/">Fabric website</a>.</p>
+			<p style="font-size: 0.7em;">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</p>
+		</div>
+
+	</div>
+</footer>
+</body>
+
+</html>

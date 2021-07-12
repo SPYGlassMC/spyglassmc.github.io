@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Release Notes 2.0.0 | SPYGlass</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Release Notes 2.0.0" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<meta property="og:description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<link rel="canonical" href="https://spyglassmc.com/wiki/Release-Notes-2.0.0.html" />
+<meta property="og:url" content="https://spyglassmc.com/wiki/Release-Notes-2.0.0.html" />
+<meta property="og:site_name" content="SPYGlass" />
+<script type="application/ld+json">
+{"description":"Development tools for vanilla Minecraft: Java Edition content creators.","url":"https://spyglassmc.com/wiki/Release-Notes-2.0.0.html","@type":"WebPage","headline":"Release Notes 2.0.0","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://spyglassmc.com/feed.xml" title="SPYGlass" /></head>
+<body><header class="site-header" role="banner">
+	<div class="wrapper"><a class="site-title" rel="author" href="/"><img src="/favicon.ico" height="30em"> SPYGlass</a><nav class="site-nav">
+				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+				<label for="nav-trigger">
+					<span class="menu-icon">
+						<svg viewBox="0 0 18 15" width="18px" height="15px">
+							<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+						</svg>
+					</span>
+				</label>
+
+				<div class="trigger"><a class="page-link" href="/blog/">Blog</a><a class="page-link" href="/discuss/">Discuss</a><a class="page-link" href="/localization/">Localization</a><a class="page-link" href="/usage/">Usage</a><a class="page-link" href="/wiki/">Wiki</a></div>
+			</nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Release Notes 2.0.0</h1>
+  </header>
+
+  <div class="post-content">
+    <ul>
+  <li><a href="#datapack-language-server-200">Datapack Language Server 2.0.0</a></li>
+  <li><a href="#-breaking-changes">💥 Breaking Changes</a>
+    <ul>
+      <li><a href="#dropped-old-vs-code">Dropped Old VS Code</a></li>
+      <li><a href="#settings-changes">Settings Changes</a></li>
+    </ul>
+  </li>
+  <li><a href="#-features">✨ Features</a>
+    <ul>
+      <li><a href="#semantic-coloring">Semantic Coloring</a>
+        <ul>
+          <li><a href="#q-can-i-still-install-arcensoths-language-mcfunction-another-vs-code-extension-that-provides-syntax-highlighting-for-mcfunctions">Q: Can I still install Arcensoth’s language-mcfunction, another VS Code extension that provides syntax highlighting for mcfunctions?</a></li>
+          <li><a href="#q-can-i-customize-the-colors-they-are-ugly">Q: Can I customize the colors? They are ugly!</a>
+            <ul>
+              <li><a href="#semantic-token-types">Semantic Token Types</a></li>
+              <li><a href="#semantic-token-modifiers">Semantic Token Modifiers</a></li>
+              <li><a href="#default-styles">Default Styles</a></li>
+            </ul>
+          </li>
+          <li><a href="#q-can-i-disable-your-semantic-coloring">Q: Can I disable your semantic coloring?</a></li>
+        </ul>
+      </li>
+      <li><a href="#new-nbt-validations-and-completions">New NBT validations and completions</a></li>
+      <li><a href="#code-actions">Code Actions</a>
+        <ul>
+          <li><a href="#list-of-code-actions">List of Code Actions</a></li>
+        </ul>
+      </li>
+      <li><a href="#new-features-settings">New Features Settings</a></li>
+      <li><a href="#new-envionment-options">New Envionment Options</a>
+        <ul>
+          <li><a href="#datasource"><code class="language-plaintext highlighter-rouge">dataSource</code></a>
+            <ul>
+              <li><a href="#available-options">Available options</a></li>
+            </ul>
+          </li>
+          <li><a href="#dependsonvanilla"><code class="language-plaintext highlighter-rouge">dependsOnVanilla</code></a>
+            <ul>
+              <li><a href="#available-options-1">Available options</a></li>
+            </ul>
+          </li>
+          <li><a href="#exclude"><code class="language-plaintext highlighter-rouge">exclude</code></a>
+            <ul>
+              <li><a href="#example">Example</a></li>
+            </ul>
+          </li>
+          <li><a href="#include"><code class="language-plaintext highlighter-rouge">include</code></a>
+            <ul>
+              <li><a href="#example-1">Example</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#new-alias-comment">New <code class="language-plaintext highlighter-rouge">#alias</code> comment</a></li>
+      <li><a href="#new-define-comment">New <code class="language-plaintext highlighter-rouge">#define</code> comment</a></li>
+      <li><a href="#support-attribute-command">Support <code class="language-plaintext highlighter-rouge">/attribute</code> command</a></li>
+    </ul>
+  </li>
+  <li><a href="#-bugfixes">🐛 Bugfixes</a></li>
+  <li><a href="#-future-plans">🕙 Future Plans</a></li>
+  <li><a href="#-thank-you">💛 Thank You</a>
+    <ul>
+      <li><a href="#looking-to-contribute">Looking to contribute?</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="datapack-language-server-200">Datapack Language Server 2.0.0</h1>
+
+<p>After two months of working, we finally got 2.0.0!</p>
+
+<p>If you like this update, you can consider <a href="https://github.com/SPGoding/datapack-language-server/blob/master/CONTRIBUTING.md">contributing</a>
+by <a href="https://github.com/sponsors/SPGoding">sponsoring</a>, <a href="https://github.com/SPGoding/datapack-language-server/issues/new">reporting bugs/sharing ideas</a>,
+or <a href="https://l10n.spgoding.com">helping localization</a>.</p>
+
+<h1 id="-breaking-changes">💥 Breaking Changes</h1>
+
+<p>There are some breaking changes that might make the language server no longer work properly for you.</p>
+
+<h2 id="dropped-old-vs-code">Dropped Old VS Code</h2>
+
+<p>We dropped support for VS Code older than <a href="https://code.visualstudio.com/updates/v1_44">1.44.0</a> (exclusive) to provide semantic coloring. Please make sure that you are using a version of VS Code later than that.</p>
+
+<h2 id="settings-changes">Settings Changes</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Lint-Rules</p>
+</blockquote>
+
+<p>All setting IDs of the language server were simplified from <code class="language-plaintext highlighter-rouge">datapackLanguageServer.xxx</code> to <code class="language-plaintext highlighter-rouge">datapack.xxx</code>.</p>
+
+<p>Many linting settings were deleted, renamed, changed, or splitted. We now have a <a href="https://github.com/SPGoding/datapack-language-server/wiki/Lint-Rules">wiki</a> introducing all these lint rules with examples.</p>
+
+<p>Here are all the changes of linting settings between 1.13.8 and 2.0.0:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>1.13.8 Setting</th>
+      <th>Operation</th>
+      <th>2.0.0 Setting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">env.version</code></td>
+      <td>Renamed</td>
+      <td><code class="language-plaintext highlighter-rouge">env.cmdVersion</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.blockStateAppendSpaceAfterComma</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.blockStateCommaSpacing</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.blockStatePutSpacesAroundEqualSign</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.blockStateEqualSpacing</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.blockStateSortKeys</code></td>
+      <td>Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.blockStateSortKeys</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.enableFormatting</code></td>
+      <td>Renamed</td>
+      <td><code class="language-plaintext highlighter-rouge">features.formatting</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.entitySelectorAppendSpaceAfterComma</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.selectorCommaSpacing</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.entitySelectorKeyOrder</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.selectorSortKeys</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.entitySelectorPutSpacesAroundEqualSign</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.selectorEqualSpacing</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.nameOfSnbtCompoundTagKeys</code></td>
+      <td>Renamed</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nameOfNbtCompoundTagKeys</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.omitDefaultNamespace</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.idOmitDefaultNamespace</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.quoteEntitySelectorKeys</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.selectorKeyQuote</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.quoteSnbtStringKeys</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtCompoundKeyQuote</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.quoteSnbtStringValues</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtStringQuote</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.quoteType</code></td>
+      <td>Splitted &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtCompoundKeyQuoteType</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.quoteType</code></td>
+      <td>Splitted &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtPathQuoteType</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.quoteType</code></td>
+      <td>Splitted &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtStringQuoteType</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.quoteType</code></td>
+      <td>Splitted &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.selectorKeyQuoteType</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.quoteType</code></td>
+      <td>Splitted &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.stringQuoteType</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtAppendSpaceAfterColon</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtCompoundColonSpacing</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtAppendSpaceAfterComma</code></td>
+      <td>Splitted &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtArrayCommaSpacing</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtAppendSpaceAfterComma</code></td>
+      <td>Splitted &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtCompoundCommaSpacing</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtAppendSpaceAfterComma</code></td>
+      <td>Splitted &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtListCommaSpacing</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtAppendSpaceAfterSemicolon</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtArraySemicolonSpacing</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtByteSuffix</code></td>
+      <td>Renamed</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtByteSuffix</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtDoubleSuffix</code></td>
+      <td>Renamed</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtDoubleSuffix</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtFloatSuffix</code></td>
+      <td>Renamed</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtFloatSuffix</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtKeepDecimalPlace</code></td>
+      <td>Deleted</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtLongSuffix</code></td>
+      <td>Renamed</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtLongSuffix</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtShortSuffix</code></td>
+      <td>Renamed</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtShortSuffix</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtSortKeys</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtCompoundSortKeys</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lint.snbtUseBooleans</code></td>
+      <td>Renamed &amp; Changed Format</td>
+      <td><code class="language-plaintext highlighter-rouge">lint.nbtBoolean</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You can see the <a href="https://github.com/SPGoding/datapack-language-server/wiki/Lint-Rules">wiki</a> to see the formats and examples of all linting rules.</p>
+
+<h1 id="-features">✨ Features</h1>
+
+<h2 id="semantic-coloring">Semantic Coloring</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Semantic-Coloring</p>
+</blockquote>
+
+<p>VS Code <a href="https://code.visualstudio.com/updates/v1_44">1.44.0</a> finalized its semantic tokens API, however the relevant API in <a href="https://github.com/microsoft/vscode-languageserver-node">vscode-languageserver-node</a> are still in proposed stage.</p>
+
+<p>We have already implemented semantic coloring for almost four months, and I can’t wait for LSP anymore to get it in the production environment. So… here it comes!</p>
+
+<p><img src="https://raw.githubusercontent.com/SPGoding/vscode-datapack-helper-plus/master/img/semantic-coloring.png" alt="semantic-coloring" /></p>
+
+<p>To experience this feature, please make sure that both <code class="language-plaintext highlighter-rouge">editor.semanticHighlighting.enabled</code> and <code class="language-plaintext highlighter-rouge">datapack.features.semanticColoring</code> are set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<h3 id="q-can-i-still-install-arcensoths-language-mcfunction-another-vs-code-extension-that-provides-syntax-highlighting-for-mcfunctions">Q: Can I still install Arcensoth’s language-mcfunction, another VS Code extension that provides syntax highlighting for mcfunctions?</h3>
+
+<p>Yes, and we <em>encourage</em> you to do so! <a href="https://github.com/Arcensoth">Arcensoth</a>’s <a href="https://github.com/Arcensoth/language-mcfunction">language-mcfunction</a> extension uses TextMate grammar which is based on regular expressions and computed on client side, while the language server’s semantic coloring is based on semantic tokens and computed on server side. As a result, the process time of <a href="https://github.com/Arcensoth/language-mcfunction">language-mcfunction</a> is <em>much shorter</em> than the language server. By using both extensions, you can get immediate feedback from Arcensoth’s extension while typing commands, which might be replaced with a more accurate color provided by the language server.</p>
+
+<p>Also, there are some drawbacks of the semantic coloring provided by the language server, mostly by design:</p>
+<ul>
+  <li>The language server doesn’t provide coloring for text components, while Arcensoth’s <a href="https://github.com/Arcensoth/language-mcfunction">language-mcfunction</a> does. This is because the server uses VS Code’s <a href="https://www.npmjs.com/package/vscode-json-languageservice">vscode-json-languageservice</a> package to provide completions and validations for text components, which doesn’t support semantic coloring.</li>
+  <li>The language server doesn’t provide coloring for punctuations, like the brackets and commas in entity selectors, while Arcensoth’s <a href="https://github.com/Arcensoth/language-mcfunction">language-mcfunction</a> does.</li>
+</ul>
+
+<h3 id="q-can-i-customize-the-colors-they-are-ugly">Q: Can I customize the colors? They are ugly!</h3>
+
+<p>Yes, for sure! In fact the language server doesn’t provide any actual <em>colors</em>; it only provides several semantic <em>tokens</em> that will be interpreted to different colors by your theme in VS Code.</p>
+
+<p>You can see VS Code’s <a href="https://github.com/microsoft/vscode/wiki/Semantic-Highlighting-Overview#as-a-theme-author-do-i-need-to-change-my-theme-to-make-it-work-with-semantic-highlighting">documentation</a> about how to change those colors. Hereby we provide you all the semantic token types and semantic token modifiers used by the language server:</p>
+
+<h4 id="semantic-token-types">Semantic Token Types</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">annotation</code></li>
+  <li><code class="language-plaintext highlighter-rouge">boolean</code></li>
+  <li><code class="language-plaintext highlighter-rouge">comment</code></li>
+  <li><code class="language-plaintext highlighter-rouge">entity</code></li>
+  <li><code class="language-plaintext highlighter-rouge">keyword</code></li>
+  <li><code class="language-plaintext highlighter-rouge">literal</code></li>
+  <li><code class="language-plaintext highlighter-rouge">identity</code></li>
+  <li><code class="language-plaintext highlighter-rouge">number</code></li>
+  <li><code class="language-plaintext highlighter-rouge">operator</code></li>
+  <li><code class="language-plaintext highlighter-rouge">property</code></li>
+  <li><code class="language-plaintext highlighter-rouge">string</code></li>
+  <li><code class="language-plaintext highlighter-rouge">type</code></li>
+  <li><code class="language-plaintext highlighter-rouge">variable</code></li>
+  <li><code class="language-plaintext highlighter-rouge">vector</code></li>
+</ul>
+
+<h4 id="semantic-token-modifiers">Semantic Token Modifiers</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">declaration</code></li>
+  <li><code class="language-plaintext highlighter-rouge">deprecated</code></li>
+  <li><code class="language-plaintext highlighter-rouge">documentation</code></li>
+  <li><code class="language-plaintext highlighter-rouge">firstArgument</code></li>
+</ul>
+
+<h4 id="default-styles">Default Styles</h4>
+
+<p>For language <code class="language-plaintext highlighter-rouge">mcfunction</code>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Semantic Token Selector</th>
+      <th>TextMate Scope</th>
+      <th>Note</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">annotation</code></td>
+      <td><code class="language-plaintext highlighter-rouge">markup.heading.annotation.mcfunction</code></td>
+      <td>A doc comment annotation</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td><code class="language-plaintext highlighter-rouge">constant.language.boolean.mcfunction</code></td>
+      <td>A boolean value</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">comment</code></td>
+      <td>N/A</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">entity</code></td>
+      <td><code class="language-plaintext highlighter-rouge">support.class.entity.mcfunction</code></td>
+      <td>An entity or a score holder</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">keyword</code></td>
+      <td>N/A</td>
+      <td><code class="language-plaintext highlighter-rouge">..</code> in number ranges and time units</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">literal</code></td>
+      <td><code class="language-plaintext highlighter-rouge">keyword.other.mcfunction</code></td>
+      <td>A literal argument</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">literal.firstArgument</code></td>
+      <td><code class="language-plaintext highlighter-rouge">keyword.control.mcfunction</code></td>
+      <td>The first literal argument in each command</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">identity</code></td>
+      <td><code class="language-plaintext highlighter-rouge">entity.name.function</code></td>
+      <td>An namespaced ID</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">number</code></td>
+      <td>N/A</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">operator</code></td>
+      <td>N/A</td>
+      <td><code class="language-plaintext highlighter-rouge">matches</code>, <code class="language-plaintext highlighter-rouge">=</code>, <code class="language-plaintext highlighter-rouge">/=</code>, etc.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">property</code></td>
+      <td>N/A</td>
+      <td>Map keys</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">string</code></td>
+      <td>N/A</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">type</code></td>
+      <td>N/A</td>
+      <td>Item/scoreboard slots and objective criteria</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">variable</code></td>
+      <td>N/A</td>
+      <td>Objectives, teams, and tags</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">vector</code></td>
+      <td><code class="language-plaintext highlighter-rouge">constant.numeric.vector.mcfunction</code></td>
+      <td>A vector</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">N/A</code> means that this token is a standard token and is implemented in VSCode by default.</li>
+</ul>
+
+<h3 id="q-can-i-disable-your-semantic-coloring">Q: Can I disable your semantic coloring?</h3>
+
+<p>Yes, by turning either <code class="language-plaintext highlighter-rouge">editor.semanticHighlighting.enabled</code> or <code class="language-plaintext highlighter-rouge">datapack.features.semanticColoring</code> off in your settings.</p>
+
+<h2 id="new-nbt-validations-and-completions">New NBT validations and completions</h2>
+
+<p>From this version on, the language server will use <a href="https://github.com/Yurihaia">Yurihaia</a>’s <a href="https://github.com/Yurihaia/mc-nbtdoc">mc-nbtdoc</a> internally for NBT validations and completions.</p>
+
+<p><img src="https://i.imgur.com/Dtfp4Ax.png" alt="nbt-hover-information" /></p>
+
+<p>As a result, the language server can:</p>
+<ul>
+  <li>Download NBT complection data for new Minecraft versions from mc-nbtdoc, without updating the language server itself.</li>
+  <li>Provide detailed descriptions for each key in NBT compound tags when computing completions.</li>
+  <li>Show those descriptions when you hover your cursor on NBT keys.</li>
+  <li>By the way, by using mc-nbtdoc, we already fixes many bugs without even knowing them!</li>
+</ul>
+
+<p>Thank <a href="https://github.com/Yurihaia">Yurihaia</a> for making such an awesome repository!</p>
+
+<h2 id="code-actions">Code Actions</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Code-Actions</p>
+</blockquote>
+
+<p>The language server can now provide some code actions to help fix problems in your commands! 
+Well, if there are any, obviously.</p>
+
+<p><img src="https://raw.githubusercontent.com/SPGoding/vscode-datapack-helper-plus/master/img/code-action.gif" alt="code-action" /></p>
+
+<h3 id="list-of-code-actions">List of Code Actions</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Name</th>
+      <th>Ex. Before</th>
+      <th>Ex. After</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">block-state-sort-keys</code></td>
+      <td>Sort block state</td>
+      <td>-</td>
+      <td>To the order specified in <a href="https://github.com/SPGoding/datapack-language-server/wiki/blockStateSortKeys"><code class="language-plaintext highlighter-rouge">datapack.lint.blockStateSortKeys</code></a></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id-attribute-datafix</code></td>
+      <td>Update this attribute name to 1.16</td>
+      <td><code class="language-plaintext highlighter-rouge">"generic.maxHealth"</code></td>
+      <td><code class="language-plaintext highlighter-rouge">"generic.max_health"</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id-complete-default-namespace</code></td>
+      <td>Complete default namespace</td>
+      <td><code class="language-plaintext highlighter-rouge">foo</code></td>
+      <td><code class="language-plaintext highlighter-rouge">minecraft:foo</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id-omit-default-namespace</code></td>
+      <td>Omit default namespace</td>
+      <td><code class="language-plaintext highlighter-rouge">minecraft:foo</code></td>
+      <td><code class="language-plaintext highlighter-rouge">foo</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt-compound-sort-keys</code></td>
+      <td>Sort NBT compound tag</td>
+      <td>-</td>
+      <td>To the order specified in <a href="https://github.com/SPGoding/datapack-language-server/wiki/nbtCompoundSortKeys"><code class="language-plaintext highlighter-rouge">datapack.lint.nbtCompoundSortKeys</code></a></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbt-uuid-datafix</code></td>
+      <td>Update this UUID to 1.16</td>
+      <td><code class="language-plaintext highlighter-rouge">{UUIDMost:1L,UUIDLeast:2L}</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{UUID:[I;0,1,0,2]}</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">selector-sort-keys</code></td>
+      <td>Sort selector argument</td>
+      <td>-</td>
+      <td>To the order specified in <a href="https://github.com/SPGoding/datapack-language-server/wiki/selectorSortKeys"><code class="language-plaintext highlighter-rouge">datapack.lint.selectorSortKeys</code></a></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">string-double-quote</code></td>
+      <td>Quote this string with double quotation marks</td>
+      <td><code class="language-plaintext highlighter-rouge">'foo'</code></td>
+      <td><code class="language-plaintext highlighter-rouge">"foo"</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">string-single-quote</code></td>
+      <td>Quote this string with single quotation marks</td>
+      <td><code class="language-plaintext highlighter-rouge">"foo"</code></td>
+      <td><code class="language-plaintext highlighter-rouge">'foo'</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">string-unquote</code></td>
+      <td>Unquote this string</td>
+      <td><code class="language-plaintext highlighter-rouge">"foo"</code></td>
+      <td><code class="language-plaintext highlighter-rouge">foo</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">vector-align-0.0</code></td>
+      <td>Align this vector to block origin</td>
+      <td><code class="language-plaintext highlighter-rouge">1.2 3 4</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1.2 3.0 4.0</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">vector-align-0.5</code></td>
+      <td>Align this vector to block center</td>
+      <td><code class="language-plaintext highlighter-rouge">1.2 3 4</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1.2 3.5 4.5</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="new-features-settings">New Features Settings</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Features-Settings</p>
+</blockquote>
+
+<p>You can now turn off unwanted features provided by DHP in settings.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datapack.features.codeActions</code></td>
+      <td>Quickfixes and refactor actions.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datapack.features.colors</code></td>
+      <td>Color information for <code class="language-plaintext highlighter-rouge">dust</code> particles and certain NBT values.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datapack.features.completions</code></td>
+      <td>Code suggestions and completions.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datapack.features.documentHighlighting</code></td>
+      <td>Highlight relevant words when you hover your cursor on them.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datapack.features.documentLinks</code></td>
+      <td>Resolving namespaced IDs as links which you can click on.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datapack.features.foldingRanges</code></td>
+      <td>Folding ranges.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datapack.features.formatting</code></td>
+      <td>Formatting.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datapack.features.hover</code></td>
+      <td>Hover information.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datapack.features.semanticColoring</code></td>
+      <td>Semantic coloring.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datapack.features.selectionRanges</code></td>
+      <td>Selection ranges. To be honest, even myself don’t know what this is.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datapack.features.signatures</code></td>
+      <td>The signature information which shows the syntax of the current command.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="new-envionment-options">New Envionment Options</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Env-Options</p>
+</blockquote>
+
+<p>Four new environment options were added in this version: <code class="language-plaintext highlighter-rouge">env.dataSource</code>, <code class="language-plaintext highlighter-rouge">env.dependsOnVanilla</code>, <code class="language-plaintext highlighter-rouge">env.exclude</code>, and <code class="language-plaintext highlighter-rouge">env.include</code>.</p>
+
+<h3 id="datasource"><code class="language-plaintext highlighter-rouge">dataSource</code></h3>
+
+<p>The download source of the completion data.</p>
+
+<h4 id="available-options">Available options</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"GitHub"</code>: (Default) Download those data from <code class="language-plaintext highlighter-rouge">raw.githubusercontent.com</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">"码云"</code>: Download those data from <code class="language-plaintext highlighter-rouge">gitee.com</code>. You can choose this if <code class="language-plaintext highlighter-rouge">raw.githubusercontent.com</code> is blocked 
+in your country/region.</li>
+</ul>
+
+<h3 id="dependsonvanilla"><code class="language-plaintext highlighter-rouge">dependsOnVanilla</code></h3>
+
+<p>Whether this datapack depends on the vanilla datapack or not. If this option is enabled,
+completions for the corresponding data of the vanilla datapack will be provided.</p>
+
+<h4 id="available-options-1">Available options</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">true</code>: (Default) Enable.</li>
+  <li><code class="language-plaintext highlighter-rouge">false</code>: Disable.</li>
+</ul>
+
+<h3 id="exclude"><code class="language-plaintext highlighter-rouge">exclude</code></h3>
+
+<p>Files that should be excluded from validation. Each string in this array will be interpreted as a 
+<a href="https://en.wikipedia.org/wiki/Glob_(programming)">glob pattern</a> to test the 
+<a href="https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths">relative file paths</a> 
+from the root of the datapack.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"datapack.env.exclude"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"data/spgoding/functions/generated/**/*.mcfunction"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This will make the language server not validate any <code class="language-plaintext highlighter-rouge">mcfunction</code> files under the 
+<code class="language-plaintext highlighter-rouge">data/spgoding/functions/generated/</code> directory.</p>
+
+<h3 id="include"><code class="language-plaintext highlighter-rouge">include</code></h3>
+
+<p>Files that should be included from validation. Each string in this array will be interpreted as a 
+<a href="https://en.wikipedia.org/wiki/Glob_(programming)">glob pattern</a> to test the 
+<a href="https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths">relative file paths</a> 
+from the root of the datapack.</p>
+
+<p>This option takes priority over <code class="language-plaintext highlighter-rouge">exclude</code>.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"datapack.env.exclude"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"data/spgoding/functions/generated/**/*.mcfunction"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"datapack.env.include"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"data/spgoding/functions/generated/special.mcfunction"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This will make the language server not validate any <code class="language-plaintext highlighter-rouge">mcfunction</code> files under the 
+<code class="language-plaintext highlighter-rouge">data/spgoding/functions/generated/</code> directory, except 
+<code class="language-plaintext highlighter-rouge">data/spgoding/functions/generated/special.mcfunction</code>.</p>
+
+<h2 id="new-alias-comment">New <code class="language-plaintext highlighter-rouge">#alias</code> comment</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Alias-Comment</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">#alias</code> comments are a way to define a string that will be shown in the completion list which will 
+insert a different value when selected.</p>
+
+<p>Syntax: <code class="language-plaintext highlighter-rouge">#alias &lt;parser: string&gt; &lt;alias: string&gt; &lt;value: string&gt;</code></p>
+
+<p><img src="https://raw.githubusercontent.com/SPGoding/vscode-datapack-helper-plus/master/img/alias-comments.gif" alt="alias-comments" /></p>
+
+<h2 id="new-define-comment">New <code class="language-plaintext highlighter-rouge">#define</code> comment</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Define-Comment</p>
+</blockquote>
+
+<p>Apart from the exsiting <code class="language-plaintext highlighter-rouge">#define</code> types, a new type <code class="language-plaintext highlighter-rouge">score_holder</code> was added.</p>
+
+<p><code class="language-plaintext highlighter-rouge">score_holder</code> is similar to <code class="language-plaintext highlighter-rouge">entity</code>, but it will only be suggested for entity arguments that are score holders.</p>
+
+<p><img src="https://i.imgur.com/fDDVi6c.gif" alt="define-score_holder" /></p>
+
+<h2 id="support-attribute-command">Support <code class="language-plaintext highlighter-rouge">/attribute</code> command</h2>
+
+<p>The <a href="http://minecraft.gamepedia.com/Commands/attribute"><code class="language-plaintext highlighter-rouge">/attribute</code></a> command added in 
+<a href="https://minecraft.gamepedia.com/Java_Edition_20w17a"><em>Minecraft: Java Edition</em> 20w17a</a> was supported.</p>
+
+<h1 id="-bugfixes">🐛 Bugfixes</h1>
+
+<p>Notable fixes:</p>
+
+<ul>
+  <li><a href="https://github.com/SPGoding/datapack-language-server/issues/364">#364</a> - Missing some gamerules.</li>
+  <li><a href="https://github.com/SPGoding/datapack-language-server/issues/415">#415</a> - The language server suspends because of unclosed NBT array tags.</li>
+  <li><a href="https://github.com/SPGoding/datapack-language-server/issues/427">#427</a> - Settings don’t update promptly after changed.</li>
+  <li>Various completion bugs of escaping.</li>
+  <li>Various formatter bugs.</li>
+  <li>Various known and unknown NBT bugs.</li>
+  <li>Various text component bugs.</li>
+</ul>
+
+<p>See all known 32 bugs that are fixed in 2.0.0: <a href="https://github.com/SPGoding/datapack-language-server/issues?q=is%3Aissue+milestone%3A%22Release+2.0.0%22+label%3A%22%F0%9F%90%9B+bug%22+">query</a>.</p>
+
+<h1 id="-future-plans">🕙 Future Plans</h1>
+
+<p>See all backlogged issues: <a href="https://github.com/SPGoding/datapack-language-server/issues?q=is%3Aissue+milestone%3ABacklog+is%3Aopen">query</a>.</p>
+
+<h1 id="-thank-you">💛 Thank You</h1>
+
+<p>A big <em>thank you</em> goes to these wonderful people! (sorted by the Unicode of names)</p>
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href=""><img src="https://cdn.discordapp.com/avatars/136741373003956224/fb81857fc2e65f6579451ddec680d1db.png?size=256" width="64px;" alt="" /><br /><sub><b>឵!Onnowhere</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/376" target="_blank" title="Bug reports">🐛 #376</a></td>
+    <td align="center"><a href="https://www.mcbbs.net/home.php?mod=space&amp;uid=1316165"><img src="https://www.mcbbs.net/uc_server/avatar.php?uid=1316165&amp;size=middle" width="64px;" alt="" /><br /><sub><b>00ll00</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/blob/master/CONTRIBUTING.md" target="_blank" title="Financial support">☕ Donate coffee</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/408" target="_blank" title="Bug reports">🐛 #408</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/422" target="_blank" title="Bug reports">🐛 #422</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Arcensoth"><img src="https://avatars2.githubusercontent.com/u/1885643?s=460&amp;u=6c40bfd2701329a442810831d3a2cf954c8cf5de&amp;v=4" width="64px;" alt="" /><br /><sub><b>Arcensoth</b></sub></a></td><td align="left"><a href="https://github.com/Arcensoth/mcdata" target="_blank" title="Dependency">⬆️ Maintains mcdata repository</a></td>
+    <td align="center"><a href="https://github.com/ChenCMD"><img src="https://avatars2.githubusercontent.com/u/46134240?s=400&amp;u=ca934b86e5189ea9c598a51358571e777e21aa2f&amp;v=4" width="64px;" alt="" /><br /><sub><b>ChenCMD</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/358" target="_blank" title="Ideas, Planning, and Feedback">✨ #358</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/368" target="_blank" title="Bug reports">🐛 #368</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/369" target="_blank" title="Bug reports">🐛 #369</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/379" target="_blank" title="Bug reports">🐛 #379</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/409" target="_blank" title="Bug reports">🐛 #409</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/411" target="_blank" title="Bug reports">🐛 #411</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/413" target="_blank" title="Bug reports">🐛 #413</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/417" target="_blank" title="Bug reports">🐛 #417</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/423" target="_blank" title="Bug reports">🐛 #423</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/424" target="_blank" title="Bug reports">🐛 #424</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/430" target="_blank" title="Bug reports">🐛 #430</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/443" target="_blank" title="Bug reports">🐛 #443</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/457" target="_blank" title="Bug reports">🐛 #457</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/459" target="_blank" title="Bug reports">🐛 #459</a><br /><a href="https://github.com/SPGoding/datapack-language-server/commits?author=ChenCMD" target="_blank" title="Localization">🌍 for Japanese (ja)</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://www.mcbbs.net/home.php?mod=space&amp;uid=844249"><img src="https://www.mcbbs.net/uc_server/avatar.php?uid=844249&amp;size=middle" width="64px;" alt="" /><br /><sub><b>Cjsah_</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/437" target="_blank" title="Bug reports">🐛 #437</a><br /><a href="https://github.com/SPGoding/datapack-json/issues/40" target="_blank" title="Bug reports">🐛 SPGoding/datapack-json#40</a></td>
+    <td align="center"><a href="https://afdian.net/u/da477488928011ea8ea552540025c377"><img src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png?imageView2/1/w/240/h/240" width="64px;" alt="" /><br /><sub><b>ColorRain_Tree</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/blob/master/CONTRIBUTING.md" target="_blank" title="Financial support">💛 <span style="color:gold;">(＃°Д°)</span></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href=""><img src="https://cdn.discordapp.com/avatars/287675064634179594/a8bbe21ac1e4af1a44597f2d760efca6.png?size=256" width="64px;" alt="" /><br /><sub><b>Ellivers</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/442" target="_blank" title="Bug reports">🐛 #442</a></td>
+    <td align="center"><a href=""><img src="https://camo.githubusercontent.com/e36bd065c49b5d8942f4d7b8788a3a5e8b1b6c90/68747470733a2f2f322e67726176617461722e636f6d2f6176617461722f32626664636334353931663439626231366531303134653966623036653266663f643d68747470732533412532462532466769746875622e6769746875626173736574732e636f6d253246696d6167657325324667726176617461727325324667726176617461722d757365722d3432302e706e6726723d6726733d3634" width="64px;" alt="" /><br /><sub><b>Feierwoerx</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/commits?author=Feierwoerx" target="_blank" title="Localization">🌍 for German (de)</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Foobin"><img src="https://avatars0.githubusercontent.com/u/22305295?s=460&amp;v=4" width="64px;" alt="" /><br /><sub><b>Foobin</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/398" target="_blank" title="Bug reports">🐛 #398</a></td>
+    <td align="center"><a href=""><img src="https://cdn.discordapp.com/avatars/165678950628982784/3f1093ec653cd58b363e084ef8d0239e.png?size=256" width="64px;" alt="" /><br /><sub><b>Jerozgen</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/364" target="_blank" title="Bug reports">🐛 #364</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/365" target="_blank" title="Bug reports">🐛 #365</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://afdian.net/@k_bai"><img src="https://pic1.afdiancdn.com/user/f34c5d62954411e8948a52540025c377/avatar/a08952a177bcf9aa806e710c0d695dc3_w719_h720_s657.jpg?imageView2/1/w/240/h/240" width="64px;" alt="" /><br /><sub><b>K_bai</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/blob/master/CONTRIBUTING.md" target="_blank" title="Financial support">☕ Donate coffee</a></td>
+    <td align="center"><a href="https://github.com/Misode"><img src="https://avatars1.githubusercontent.com/u/17352009?s=460&amp;u=2813225036a78ea0c585fa5f9150d448c3a8ff8e&amp;v=4" width="64px;" alt="" /><br /><sub><b>Misode</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/238" target="_blank" title="Ideas, Planning, and Feedback">✨ #238</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/375" target="_blank" title="Bug reports">🐛 #375</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/384" target="_blank" title="Bug reports">🐛 #384</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/386" target="_blank" title="Bug reports">🐛 #386</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href=""><img src="https://avatars2.githubusercontent.com/u/12068027?v=4" width="64px;" alt="" /><br /><sub><b>MulverineX</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/401" target="_blank" title="Bug reports">🐛 #401</a></td>
+    <td align="center"><a href=""><img src="https://cdn.discordapp.com/avatars/342059161426591745/54b479e081dbc77474e355b512c09961.png?size=256" width="64px;" alt="" /><br /><sub><b>Red_Bones</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-json/issues/41" target="_blank" title="Bug reports">🐛 SPGoding/datapack-json#41</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href=""><img src="https://avatars3.githubusercontent.com/u/1260418?s=460&amp;u=546b2be73fcee3556d1dcb0fb8e63245083789e1&amp;v=4" width="64px;" alt="" /><br /><sub><b>ShoukaSeikyo</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/451" target="_blank" title="Bug reports">🐛 #451</a></td>
+    <td align="center"><a href="https://github.com/Yurihaia"><img src="https://avatars3.githubusercontent.com/u/17830663?s=400&amp;u=4959d74e027642f5a207dcd5e112005c5932b844&amp;v=4" width="64px;" alt="" /><br /><sub><b>Yurihaia</b></sub></a></td><td align="left"><a href="https://github.com/Yurihaia/mc-nbtdoc" target="_blank" title="Dependency">⬆️ Maintains mc-nbtdoc repository</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://www.mcbbs.net/home.php?mod=space&amp;uid=10240"><img src="https://www.mcbbs.net/uc_server/avatar.php?uid=10240&amp;size=middle" width="64px;" alt="" /><br /><sub><b>kakagRou</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/blob/master/CONTRIBUTING.md" target="_blank" title="Financial support">☕ Donate coffee</a></td>
+    <td align="center"><a href="https://www.mcbbs.net/home.php?mod=space&amp;uid=497461"><img src="https://www.mcbbs.net/uc_server/avatar.php?uid=497461&amp;size=middle" width="64px;" alt="" /><br /><sub><b>liudaifeng55</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/453" target="_blank" title="Bug reports">🐛 #453</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://www.mcbbs.net/home.php?mod=space&amp;uid=1670389"><img src="https://www.mcbbs.net/uc_server/avatar.php?uid=1670389&amp;size=middle" width="64px;" alt="" /><br /><sub><b>martin_zzy</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/353" target="_blank" title="Bug reports">🐛 #353</a></td>
+    <td align="center"><a href="https://www.mcbbs.net/home.php?mod=space&amp;uid=2905154"><img src="https://www.mcbbs.net/uc_server/avatar.php?uid=2905154&amp;size=middle" width="64px;" alt="" /><br /><sub><b>missinggo</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/438" target="_blank" title="Bug reports">🐛 #438</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/439" target="_blank" title="Bug reports">🐛 #439</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/469" target="_blank" title="Ideas, Planning, and Feedback">✨ #469</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/mathaym25"><img src="https://avatars2.githubusercontent.com/u/35702771?s=460&amp;u=393d01acff13df6e83beb953bd6f916f514f5141&amp;v=4" width="64px;" alt="" /><br /><sub><b>mathaym25</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/382" target="_blank" title="Ideas, Planning, and Feedback">✨ #382</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/385" target="_blank" title="Bug reports">🐛 #385</a></td>
+    <td align="center"><a href=""><img src="https://cdn.discordapp.com/avatars/416799672674418710/d6b90e26cf0f2be0aeaa321916311db2.png?size=256" width="64px;" alt="" /><br /><sub><b>ncfumction</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/376" target="_blank" title="Bug reports">🐛 #376</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/392" target="_blank" title="Bug reports">🐛 #392</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/393" target="_blank" title="Ideas, Planning, and Feedback">✨ #393</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/shurik204"><img src="https://avatars2.githubusercontent.com/u/43310372?s=460&amp;u=91bc2eb7213cd4580be5de984f7f920397217103&amp;v=4" width="64px;" alt="" /><br /><sub><b>shurik204</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/455" target="_blank" title="Bug reports">🐛 #455</a></td>
+    <td align="center"><a href="https://github.com/Icy9ptcl"><img src="https://avatars2.githubusercontent.com/u/22657582?s=460&amp;u=9d66b30e209daf7c5fe39373207f86a799173797&amp;v=4" width="64px;" alt="" /><br /><sub><b>ひろ at Github</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/475" target="_blank" title="Bug reports">🐛 #475</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://afdian.net/u/43f152b898b511e8b5f552540025c377"><img src="https://pic1.afdiancdn.com/user/43f152b898b511e8b5f552540025c377/avatar/b35473b4f5d00311d3a3cabef38c60fd_w640_h640_s24.jpg?imageView2/1/w/240/h/240" width="64px;" alt="" /><br /><sub><b>酱香卤鹅</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/blob/master/CONTRIBUTING.md" target="_blank" title="Financial support">☕ Donate coffee</a></td>
+    <td align="center"><a href="https://afdian.net/@LTCat"><img src="https://pic1.afdiancdn.com/user/df2dfad2960911e89c5252540025c377/avatar/31c78ee63d5dce8ac4848c837fb04204_w160_h160_s35.jpg?imageView2/1/w/240/h/240" width="64px;" alt="" /><br /><sub><b>龙腾猫跃</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/blob/master/CONTRIBUTING.md" target="_blank" title="Financial support">☕ Donate coffee</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+<p>This project follows the <a href="https://github.com/all-contributors/all-contributors">all-contributors</a> specification. Contributions of any kind are welcome!</p>
+
+<h2 id="looking-to-contribute">Looking to contribute?</h2>
+
+<p>Thanks a lot! Please check <a href="https://github.com/SPGoding/datapack-language-server/blob/master/CONTRIBUTING.md">the contributing guide</a> to learn more about how to contribute!</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"></a><br>The contents of this website, unless otherwise indicated, are licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			We have shamelessly stolen some of the website design from the <a href="https://fabricmc.net/">Fabric website</a>.</p>
+			<p style="font-size: 0.7em;">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</p>
+		</div>
+
+	</div>
+</footer>
+</body>
+
+</html>

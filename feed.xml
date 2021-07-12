@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://spyglassmc.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://spyglassmc.com/" rel="alternate" type="text/html" /><updated>2021-07-12T01:10:27+00:00</updated><id>https://spyglassmc.com/feed.xml</id><title type="html">SPYGlass</title><subtitle>Development tools for vanilla Minecraft: Java Edition content creators.</subtitle><entry><title type="html">Parsing Entities and Score Holders</title><link href="https://spyglassmc.com/develop/2021/04/30/parsing-entities-and-score-holders.html" rel="alternate" type="text/html" title="Parsing Entities and Score Holders" /><published>2021-04-30T00:00:00+00:00</published><updated>2021-04-30T00:00:00+00:00</updated><id>https://spyglassmc.com/develop/2021/04/30/parsing-entities-and-score-holders</id><content type="html" xml:base="https://spyglassmc.com/develop/2021/04/30/parsing-entities-and-score-holders.html">&lt;h1 id=&quot;intro&quot;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://minecraft.fandom.com/wiki/Argument_types#minecraft:entity&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:entity&lt;/code&gt;&lt;/a&gt; and &lt;a href=&quot;https://minecraft.fandom.com/wiki/Argument_types#minecraft:score_holder&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:score_holder&lt;/code&gt;&lt;/a&gt;
+are the two most complicated parsers used in &lt;em&gt;Minecraft: Java Edition&lt;/em&gt; command system, at least in my opinion. This article
+tries to document some notable things regarding parsing such arguments.&lt;/p&gt;
+
+&lt;h1 id=&quot;uuid&quot;&gt;UUID&lt;/h1&gt;
+
+&lt;p&gt;Both &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:entity&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:score_holder&lt;/code&gt; seem to accept UUIDs. However, the ways they parse UUIDs are not the
+same - they’re actually quite different. For &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;entity&lt;/code&gt;, UUIDs can be contained in both unquoted strings and quoted strings,
+and will be parsed by Java’s built-in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UUID.fromString&lt;/code&gt; method. For &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;score_holder&lt;/code&gt;, however, UUIDs are just treated like
+fake names, meaning that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;01-1-1-1-1&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1-1-1-1-1&lt;/code&gt; are seen as two different UUIDs in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/scoreboard&lt;/code&gt; commands.&lt;/p&gt;
+
+&lt;h2 id=&quot;javautiluuidfromstring&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;java.util.UUID.fromString&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;Unlike what we’ve been told about UUID’s format (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;8-4-4-4-12&lt;/code&gt;), the requirement of Java’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UUID.fromString&lt;/code&gt; method is
+quite loose[1]. In fact, any strings containing five segments separated by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&lt;/code&gt; where each segment is a hexadecimal
+number representable in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Int64&lt;/code&gt; are acceptable. SPYGlass uses something similar to the following TypeScript code to
+achieve the same effect:&lt;/p&gt;
+
+&lt;div class=&quot;language-typescript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;LongMax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bigint&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9223372036854775807&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;declare&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;string&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;0-9a-f&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;+-&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;0-9a-f&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;+-&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;0-9a-f&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;+-&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;0-9a-f&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;+-&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;0-9a-f&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;+$/i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bigint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;BigInt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`0x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;every&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;LongMax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mostSignificantBits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bigint&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;BigInt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;asIntN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;leastSignificantBits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bigint&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;BigInt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;asIntN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;player-name&quot;&gt;Player Name&lt;/h1&gt;
+
+&lt;p&gt;Both &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;entity&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;score_holder&lt;/code&gt;, again, achieve parsing player names differently. For &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;entity&lt;/code&gt;, the player name can be
+either unquoted or quoted, and the length of the value must be between &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;16&lt;/code&gt;. For &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;score_holder&lt;/code&gt;, the parser
+reads everything literally until it hits a space (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt; &lt;/code&gt;) or the end of the command; although the parser itself doesn’t have limitations at
+the length of the value, it’s still limited between &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;40&lt;/code&gt; thanks to Brigadier and a check in
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;net.minecraft.world.scores.Scoreboard#getOrCreatePlayerScore&lt;/code&gt; (Mojang mappings, 21w15a).&lt;/p&gt;
+
+&lt;h1 id=&quot;entity-selector&quot;&gt;Entity Selector&lt;/h1&gt;
+
+&lt;p&gt;Here comes the fun part. An entity selector must begin with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@&lt;/code&gt;, followed by one of the selector variables (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;r&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;s&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e&lt;/code&gt;).&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Variable&lt;/th&gt;
+      &lt;th&gt;Result        (Pseudocode)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;limit = 1; playersOnly = true; sort = nearest; type = 'minecraft:player'&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;limit = Integer.MAX_VALUE; playersOnly = true; sort = arbitrary; type = 'minecraft:player'&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;r&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;limit = 1; playersOnly = true; sort = random; type = 'minecraft:player'&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;s&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;limit = 1; playersOnly = false; currentEntity = true;&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;limit = Integer.MAX_VALUE; playersOnly = false; sort = arbitrary; addPredicate(e =&amp;gt; e.isAlive())&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;It then may have an optional arguments part, beginning with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[&lt;/code&gt; and ending with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;]&lt;/code&gt;. Properties in the list are separated with commas (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;,&lt;/code&gt;),
+and trailing commas are surprisingly valid. Keys can be either unquoted or quoted, while rules for values vary a lot. Here is a comprehensive
+table showing rules and effects of all entity selector arguments:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Argument&lt;/th&gt;
+      &lt;th&gt;Value&lt;/th&gt;
+      &lt;th&gt;Applicable When…&lt;/th&gt;
+      &lt;th&gt;Result (Pseudocode)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;advancements=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A map (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;=&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;,&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;}&lt;/code&gt;) from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:resource_location{category: 'advancement'}&lt;/code&gt; to either Brigadier booleans or “maps (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;=&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;,&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;}&lt;/code&gt;) from unquoted Brigadier strings to Brigadier booleans with trailing commas allowed” with trailing commas allowed&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;advancements=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; e.advancements justCheckIfItSomehowMagicallyMatches &amp;lt;value&amp;gt;)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;distance=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Non-negative &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:float_range&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;distance=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;distance = &amp;lt;value&amp;gt;; dimensionLimited = true&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gamemode=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;An unquoted Brigadier string of value &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;adventure&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;creative&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spectator&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;survival&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gamemode=&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gamemode=!&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; e is Player &amp;amp;&amp;amp; e.gamemode === &amp;lt;value&amp;gt;); playersOnly = true&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gamemode=!&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;An unquoted Brigadier string of value &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;adventure&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;creative&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spectator&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;survival&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gamemode=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; e is Player &amp;amp;&amp;amp; e.gamemode !== &amp;lt;value&amp;gt;); playersOnly = true&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;level=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Non-negative &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:int_range&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;level=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; e is Player &amp;amp;&amp;amp; e.level in &amp;lt;value&amp;gt;); playersOnly = true&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;limit=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A Brigadier integer greater than 0&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;limit=&lt;/code&gt; and is not &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@s&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;limit = &amp;lt;value&amp;gt;&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A Brigadier string (unquoted or quoted)&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name=&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name=!&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; e.name === &amp;lt;value&amp;gt;)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name=!&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A Brigadier string (unquoted or quoted)&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; e.name !== &amp;lt;value&amp;gt;)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nbt=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nbt:compound&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Always&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; e.nbt matches &amp;lt;value&amp;gt;)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nbt=!&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nbt:compound&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Always&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; e.nbt !matches &amp;lt;value&amp;gt;)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;predicate=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:resource_location{category: 'predicate'}&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Always&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(&amp;lt;value&amp;gt;.fillInContext())&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;predicate=!&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:resource_location{category: 'predicate'}&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Always&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(&amp;lt;value&amp;gt;.fillInContext().invert())&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scores=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A map (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;=&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;,&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;}&lt;/code&gt;) from unquoted Brigadier strings to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:int_range&lt;/code&gt; with trailing commas allowed&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scores=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; &amp;lt;value&amp;gt;.every(([objective, range]) =&amp;gt; e.scores[objective] in range))&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sort=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;An unquoted Brigadier string of value &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;arbitrary&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;furthest&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nearest&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;random&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sort=&lt;/code&gt; and is not &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@s&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sort = &amp;lt;value&amp;gt;&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tag=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;An unquoted Brigadier string&lt;/td&gt;
+      &lt;td&gt;Always&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; &amp;lt;value&amp;gt; === '' ? e.tags.length === 0 : e.tags.includes(&amp;lt;value&amp;gt;))&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tag=!&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;An unquoted Brigadier string&lt;/td&gt;
+      &lt;td&gt;Always&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; &amp;lt;value&amp;gt; === '' ? e.tags.length !== 0 : !e.tags.includes(&amp;lt;value&amp;gt;))&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;team=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;An unquoted Brigadier string&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;team=&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;team=!&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; (e.team ?? '') === &amp;lt;value&amp;gt;)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;team=!&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;An unquoted Brigadier string&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;team=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; (e.team ?? '') !== &amp;lt;value&amp;gt;)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;type=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:resource_location{category: 'entity_type', allowTag: true}&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;type=&lt;/code&gt; (excluding entity type tags) or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;type=!&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; &amp;lt;value&amp;gt; is Tag ? e.type in (&amp;lt;value&amp;gt; ?? []) : e.type === &amp;lt;value&amp;gt;); if (&amp;lt;value&amp;gt; === 'minecraft:player') playersOnly = true; if (&amp;lt;value&amp;gt; !is Tag) type = &amp;lt;value&amp;gt;&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;type=!&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:resource_location{category: 'entity_type', allowTag: true}&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;type=&lt;/code&gt; (excluding entity type tags)&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; &amp;lt;value&amp;gt; is Tag ? e.type !in (&amp;lt;value&amp;gt; ?? []) : e.type !== &amp;lt;value&amp;gt;)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A Brigadier double&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x = &amp;lt;value&amp;gt;; dimensionLimited = true&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A Brigadier double&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y = &amp;lt;value&amp;gt;; dimensionLimited = true&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;z=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A Brigadier double&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;z=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;z = &amp;lt;value&amp;gt;; dimensionLimited = true&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dx=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A Brigadier double&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dx=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dx = &amp;lt;value&amp;gt;; dimensionLimited = true&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dy=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A Brigadier double&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dy=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dy = &amp;lt;value&amp;gt;; dimensionLimited = true&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dz=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A Brigadier double&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dz=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dz = &amp;lt;value&amp;gt;; dimensionLimited = true&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x_rotation=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Wrapped &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:float_range&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x_rotation=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; e.x_rotation wrappedIn &amp;lt;value&amp;gt;)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y_rotation=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Wrapped &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minecraft:float_range&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;No existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y_rotation=&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addPredicate(e =&amp;gt; e.y_rotation wrappedIn &amp;lt;value&amp;gt;)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Note:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Brigadier strings, no matter unquoted or quoted, are all emptyable, unless otherwise noticed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;outro&quot;&gt;Outro&lt;/h1&gt;
+
+&lt;p&gt;I actually didn’t plan to write such an article, but my notes kept getting more interesting as I was exploring the code.
+Anyways, &lt;em&gt;Minecraft&lt;/em&gt;’s command parsers are full of inconsistencies. @Mojang, please fix your game, this is virtually unplayable!!111!1&lt;/p&gt;
+
+&lt;p&gt;[1]: &lt;a href=&quot;http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/default/src/share/classes/java/util/UUID.java&quot;&gt;view &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/share/classes/java/util/UUID.java&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="develop" /><summary type="html">Intro</summary></entry></feed>

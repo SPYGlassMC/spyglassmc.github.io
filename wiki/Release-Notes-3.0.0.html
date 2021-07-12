@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Release Notes 3.0.0 | SPYGlass</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Release Notes 3.0.0" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<meta property="og:description" content="Development tools for vanilla Minecraft: Java Edition content creators." />
+<link rel="canonical" href="https://spyglassmc.com/wiki/Release-Notes-3.0.0.html" />
+<meta property="og:url" content="https://spyglassmc.com/wiki/Release-Notes-3.0.0.html" />
+<meta property="og:site_name" content="SPYGlass" />
+<script type="application/ld+json">
+{"description":"Development tools for vanilla Minecraft: Java Edition content creators.","url":"https://spyglassmc.com/wiki/Release-Notes-3.0.0.html","@type":"WebPage","headline":"Release Notes 3.0.0","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://spyglassmc.com/feed.xml" title="SPYGlass" /></head>
+<body><header class="site-header" role="banner">
+	<div class="wrapper"><a class="site-title" rel="author" href="/"><img src="/favicon.ico" height="30em"> SPYGlass</a><nav class="site-nav">
+				<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+				<label for="nav-trigger">
+					<span class="menu-icon">
+						<svg viewBox="0 0 18 15" width="18px" height="15px">
+							<path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+						</svg>
+					</span>
+				</label>
+
+				<div class="trigger"><a class="page-link" href="/blog/">Blog</a><a class="page-link" href="/discuss/">Discuss</a><a class="page-link" href="/localization/">Localization</a><a class="page-link" href="/usage/">Usage</a><a class="page-link" href="/wiki/">Wiki</a></div>
+			</nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Release Notes 3.0.0</h1>
+  </header>
+
+  <div class="post-content">
+    <ul>
+  <li><a href="#-data-pack-language-server-309">🔷 Data-pack Language Server 3.0.9</a></li>
+  <li><a href="#-data-pack-language-server-308">🔷 Data-pack Language Server 3.0.8</a></li>
+  <li><a href="#-data-pack-language-server-307">🔷 Data-pack Language Server 3.0.7</a></li>
+  <li><a href="#-data-pack-language-server-306">🔷 Data-pack Language Server 3.0.6</a></li>
+  <li><a href="#-data-pack-language-server-305">🔷 Data-pack Language Server 3.0.5</a></li>
+  <li><a href="#-data-pack-language-server-304">🔷 Data-pack Language Server 3.0.4</a></li>
+  <li><a href="#-data-pack-language-server-303">🔷 Data-pack Language Server 3.0.3</a></li>
+  <li><a href="#-data-pack-language-server-302">🔷 Data-pack Language Server 3.0.2</a></li>
+  <li><a href="#-data-pack-language-server-301">🔷 Data-pack Language Server 3.0.1</a></li>
+  <li><a href="#-data-pack-language-server-300">🔷 Data-pack Language Server 3.0.0</a></li>
+  <li><a href="#-breaking-changes-in-300">💥 Breaking Changes in 3.0.0</a>
+    <ul>
+      <li><a href="#programming">Programming</a></li>
+    </ul>
+  </li>
+  <li><a href="#-features-in-300">✨ Features in 3.0.0</a>
+    <ul>
+      <li><a href="#renaming">Renaming</a></li>
+      <li><a href="#programming-1">Programming</a>
+        <ul>
+          <li><a href="#initialization-options">Initialization Options</a></li>
+          <li><a href="#plugin-system">Plugin System</a></li>
+        </ul>
+      </li>
+      <li><a href="#json-support">JSON Support</a></li>
+      <li><a href="#declaration-support">Declaration Support</a></li>
+      <li><a href="#imp-doc-support">IMP-Doc Support</a>
+        <ul>
+          <li><a href="#basic">Basic</a></li>
+          <li><a href="#dhps-implementation">DHP’s Implementation</a>
+            <ul>
+              <li><a href="#annotations">Annotations</a></li>
+              <li><a href="#imp-doc-for-commands">IMP-Doc for Commands</a></li>
+            </ul>
+          </li>
+          <li><a href="#further-reading">Further Reading</a></li>
+          <li><a href="#references">References</a></li>
+        </ul>
+      </li>
+      <li><a href="#access-modifiers-support">Access Modifiers Support</a>
+        <ul>
+          <li><a href="#within"><code class="language-plaintext highlighter-rouge">@within</code></a>
+            <ul>
+              <li><a href="#syntax">Syntax</a>
+                <ul>
+                  <li><a href="#file-type">File Type</a></li>
+                  <li><a href="#namespaced-id-pattern">Namespaced ID Pattern</a></li>
+                </ul>
+              </li>
+              <li><a href="#examples">Examples</a></li>
+            </ul>
+          </li>
+          <li><a href="#private"><code class="language-plaintext highlighter-rouge">@private</code></a>
+            <ul>
+              <li><a href="#syntax-1">Syntax</a></li>
+              <li><a href="#examples-1">Examples</a></li>
+            </ul>
+          </li>
+          <li><a href="#internal"><code class="language-plaintext highlighter-rouge">@internal</code></a>
+            <ul>
+              <li><a href="#syntax-2">Syntax</a></li>
+              <li><a href="#examples-2">Examples</a></li>
+            </ul>
+          </li>
+          <li><a href="#public-and-api"><code class="language-plaintext highlighter-rouge">@public</code> and <code class="language-plaintext highlighter-rouge">@api</code></a>
+            <ul>
+              <li><a href="#syntax-3">Syntax</a></li>
+              <li><a href="#examples-3">Examples</a></li>
+            </ul>
+          </li>
+          <li><a href="#default-visibility-config">Default Visibility Config</a>
+            <ul>
+              <li><a href="#available-options">Available options</a></li>
+            </ul>
+          </li>
+          <li><a href="#strict-check-configs">Strict Check Configs</a></li>
+        </ul>
+      </li>
+      <li><a href="#nested-data-pack-detection">Nested Data Pack Detection</a></li>
+      <li><a href="#creating-non-existent-files-quickly">Creating Non-existent Files Quickly</a></li>
+      <li><a href="#nbt-array-length-check">NBT Array Length Check</a>
+        <ul>
+          <li><a href="#examples-4">Examples</a>
+            <ul>
+              <li><a href="#default">Default</a></li>
+              <li><a href="#disabled">Disabled</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#nbt-list-length-check">NBT List Length Check</a>
+        <ul>
+          <li><a href="#examples-5">Examples</a>
+            <ul>
+              <li><a href="#default-1">Default</a></li>
+              <li><a href="#enabled">Enabled</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#diagnostics">Diagnostics</a></li>
+    </ul>
+  </li>
+  <li><a href="#-localizations-in-300">🌐 Localizations in 3.0.0</a></li>
+  <li><a href="#-performance-in-300">⚡ Performance in 3.0.0</a></li>
+  <li><a href="#-bugfixes-in-300">🐛 Bugfixes in 3.0.0</a></li>
+  <li><a href="#-refactors-in-300">♻ Refactors in 3.0.0</a></li>
+  <li><a href="#-future-plans">🕙 Future Plans</a></li>
+  <li><a href="#-thank-you">💛 Thank You</a>
+    <ul>
+      <li><a href="#looking-to-contribute">Looking to contribute?</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="-data-pack-language-server-309">🔷 Data-pack Language Server 3.0.9</h1>
+
+<p>See the <a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v3.0.9">auto-generated changelog</a>.</p>
+
+<h1 id="-data-pack-language-server-308">🔷 Data-pack Language Server 3.0.8</h1>
+
+<p>See the <a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v3.0.8">auto-generated changelog</a>.</p>
+
+<h1 id="-data-pack-language-server-307">🔷 Data-pack Language Server 3.0.7</h1>
+
+<p>See the <a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v3.0.7">auto-generated changelog</a>.</p>
+
+<h1 id="-data-pack-language-server-306">🔷 Data-pack Language Server 3.0.6</h1>
+
+<p>See the <a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v3.0.6">auto-generated changelog</a>.</p>
+
+<h1 id="-data-pack-language-server-305">🔷 Data-pack Language Server 3.0.5</h1>
+
+<p>See the <a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v3.0.5">auto-generated changelog</a>.</p>
+
+<h1 id="-data-pack-language-server-304">🔷 Data-pack Language Server 3.0.4</h1>
+
+<p>See the <a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v3.0.4">auto-generated changelog</a>.</p>
+
+<h1 id="-data-pack-language-server-303">🔷 Data-pack Language Server 3.0.3</h1>
+
+<p>See the <a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v3.0.3">auto-generated changelog</a>.</p>
+
+<h1 id="-data-pack-language-server-302">🔷 Data-pack Language Server 3.0.2</h1>
+
+<p>See the <a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v3.0.2">auto-generated changelog</a>.</p>
+
+<h1 id="-data-pack-language-server-301">🔷 Data-pack Language Server 3.0.1</h1>
+
+<p>See the <a href="https://github.com/SPGoding/datapack-language-server/releases/tag/v3.0.1">auto-generated changelog</a>.</p>
+
+<h1 id="-data-pack-language-server-300">🔷 Data-pack Language Server 3.0.0</h1>
+
+<p>This is the largest update to the language server throughout the history. Tons of handy features have been added.
+You should really <a href="https://github.com/sponsors/SPGoding">sponsor</a> me to support this project. Well, perhaps.</p>
+
+<h1 id="-breaking-changes-in-300">💥 Breaking Changes in 3.0.0</h1>
+
+<h2 id="programming">Programming</h2>
+
+<p>The underlying API structure has been completely re-designed. Now the <code class="language-plaintext highlighter-rouge">DatapackLanguageService</code> class is considered
+as the public API of this package, <em>any</em> other exported classes/variables/functions are <em>not</em> considered as stable
+API and are subject to change in <em>any</em> versions.</p>
+
+<h1 id="-features-in-300">✨ Features in 3.0.0</h1>
+
+<h2 id="renaming">Renaming</h2>
+
+<p>The brand name of the extension family has been changed from “Datapack Helper Plus” to “Data-pack Helper Plus”.
+I also changed all references of “datapack” in error messages to “data pack”.</p>
+
+<h2 id="programming-1">Programming</h2>
+
+<p>There are some features/changes that might sound interesting to people who’d like to extend the language server or
+make the language server a dependency of their project.</p>
+
+<h3 id="initialization-options">Initialization Options</h3>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Language-Server-Details</p>
+</blockquote>
+
+<ul>
+  <li>Both the <code class="language-plaintext highlighter-rouge">storagePath</code> and <code class="language-plaintext highlighter-rouge">globalStoragePath</code> initialization options are no longer required.</li>
+  <li>Added a new optional <code class="language-plaintext highlighter-rouge">localeCode</code> option which defaults to <code class="language-plaintext highlighter-rouge">en</code>. It should be a locale code that the server could 
+use when <code class="language-plaintext highlighter-rouge">datapack.env.language</code> is set to <code class="language-plaintext highlighter-rouge">Default</code> in the config.</li>
+  <li>Added a new optional <code class="language-plaintext highlighter-rouge">customCapabilities</code> option to indicate which <code class="language-plaintext highlighter-rouge">spgoding/datapack/*</code> messages are supported by 
+the client.</li>
+</ul>
+
+<h3 id="plugin-system">Plugin System</h3>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Plugins</p>
+</blockquote>
+
+<p>The language server now has support for its own plugins. The language features for commands and IMP-Doc are now 
+provided by <a href="https://github.com/SPGoding/datapack-language-server/tree/master/plugins">built-in plugins</a>. Note 
+that these built-in plugins are using a lot of non-APIs which cannot be accessed by external plugins. We will 
+expose those part of functions slowly.</p>
+
+<p>We are planning to collaborate with <a href="https://github.com/MulverineX">MulverineX</a> to bring <a href="https://github.com/Energyxxer/Trident-Language">Trident Language</a>
+support to the language server by using the new plugin system. There <em>is</em> a really long way before that, however.</p>
+
+<h2 id="json-support">JSON Support</h2>
+
+<p>The language server can now provide language features for data pack JSON files, including advancements, dimensions, 
+dimension types, functions, loot tables, predicates, recipes, all kinds of tags, and all kinds of worldgen files.</p>
+
+<p>The legacy <a href="https://marketplace.visualstudio.com/items?itemName=SPGoding.datapack-json">Datapack Helper Plus (JSON)</a> 
+VS Code extension has been abandoned. Please uninstall it if you were using it.</p>
+
+<p>By using the language server’s JSON support, you can enjoy completions <strong>within</strong> string values, which is a huge plus
+to your quality of life.</p>
+
+<p><img src="https://user-images.githubusercontent.com/15277496/90090798-8d577b00-dcea-11ea-9ab6-c7ae2669498a.png" alt="image" /></p>
+
+<p>You can now also use almost all of the features that you can use in <code class="language-plaintext highlighter-rouge">mcfunction</code> files in JSONs, e.g. finding referenes, 
+semantic coloring, etc.</p>
+
+<p>The JSON support is a quite complicated feature, and there might be a lot of issues. Please report <em>any</em> of them
+in <a href="https://github.com/SPGoding/datapack-language-server/issues">GitHub Issues</a>; they will get fixed!</p>
+
+<h2 id="declaration-support">Declaration Support</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Declare-Comment</p>
+</blockquote>
+
+<p>The old <code class="language-plaintext highlighter-rouge">#define</code> comment is renamed to <code class="language-plaintext highlighter-rouge">#declare</code>. But don’t worry, <code class="language-plaintext highlighter-rouge">#define</code> is still an alias of it 😅.</p>
+
+<p>Resources declared by the <code class="language-plaintext highlighter-rouge">#declare</code> comment are now considered as <strong>declarations</strong> instead of <strong>definitions</strong>. You
+can use the new “Goto Declaration” feature to navigate to these comments.</p>
+
+<p>The game will treat declaration comments as normal comments and simply ignore them.</p>
+
+<p>Syntax: <code class="language-plaintext highlighter-rouge">#declare|#define &lt;type: string&gt; &lt;value: string&gt;</code></p>
+
+<p><img src="https://raw.githubusercontent.com/SPGoding/vscode-datapack-helper-plus/master/img/declaration-comments.png" alt="declaration-comments" /></p>
+
+<p>Here’s a table showing how to declare or define each type of resource:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Declaration</th>
+      <th>Definition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Advancement</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare advancement &lt;ID&gt;</code></td>
+      <td>An advancement file.</td>
+    </tr>
+    <tr>
+      <td>Biome</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/biome &lt;ID&gt;</code></td>
+      <td>A biome file.</td>
+    </tr>
+    <tr>
+      <td>Block Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag/block &lt;ID&gt;</code></td>
+      <td>A block tag file.</td>
+    </tr>
+    <tr>
+      <td>Bossbar</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare bossbar &lt;ID&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">bossbar add &lt;ID&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Configured Carver</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/configured_carver &lt;ID&gt;</code></td>
+      <td>A configured carver file.</td>
+    </tr>
+    <tr>
+      <td>Configured Feature</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/configured_feature &lt;ID&gt;</code></td>
+      <td>A configured feature file.</td>
+    </tr>
+    <tr>
+      <td>Configured Structure Feature</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/configured_structure_feature &lt;ID&gt;</code></td>
+      <td>A configured structure feature file.</td>
+    </tr>
+    <tr>
+      <td>Configured Surface Builder</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/configured_surface_builder &lt;ID&gt;</code></td>
+      <td>A configured surface builder file.</td>
+    </tr>
+    <tr>
+      <td>Dimension</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare dimension &lt;ID&gt;</code></td>
+      <td>A dimension file.</td>
+    </tr>
+    <tr>
+      <td>Dimension Type</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare dimension_type &lt;ID&gt;</code></td>
+      <td>A dimension type file.</td>
+    </tr>
+    <tr>
+      <td>Entity</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare entity &lt;ID&gt;</code></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Entity Type Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag/entity_type &lt;ID&gt;</code></td>
+      <td>An entity type tag file.</td>
+    </tr>
+    <tr>
+      <td>Fluid Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag/fluid &lt;ID&gt;</code></td>
+      <td>A fluid tag file.</td>
+    </tr>
+    <tr>
+      <td>Function</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare function &lt;ID&gt;</code></td>
+      <td>A function file.</td>
+    </tr>
+    <tr>
+      <td>Function Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag/function &lt;ID&gt;</code></td>
+      <td>A function tag file.</td>
+    </tr>
+    <tr>
+      <td>Item Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag/item &lt;ID&gt;</code></td>
+      <td>An item tag file.</td>
+    </tr>
+    <tr>
+      <td>Loot Table</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare loot_table &lt;ID&gt;</code></td>
+      <td>A loot table file.</td>
+    </tr>
+    <tr>
+      <td>Objective</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare objective &lt;ID&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">scoreboard objectives add &lt;ID&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Predicate</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare predicate &lt;ID&gt;</code></td>
+      <td>A predicate file.</td>
+    </tr>
+    <tr>
+      <td>Processor List</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/processor_list &lt;ID&gt;</code></td>
+      <td>A processor list file.</td>
+    </tr>
+    <tr>
+      <td>Recipe</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare recipe &lt;ID&gt;</code></td>
+      <td>A recipe file.</td>
+    </tr>
+    <tr>
+      <td>Score Holder</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare score_holder &lt;ID&gt;</code></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Storage</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare storage &lt;ID&gt;</code></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Tag</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare tag &lt;ID&gt;</code></td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Team</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare team &lt;ID&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">team add &lt;ID&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Template Pool</td>
+      <td><code class="language-plaintext highlighter-rouge">#declare worldgen/template_pool &lt;ID&gt;</code></td>
+      <td>A template pool file.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="imp-doc-support">IMP-Doc Support</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/IMP-Doc</p>
+</blockquote>
+
+<p>IMP-Doc is a special type of comment that can increase the readability of your mcfunctions and make it easier for you
+to write data packs.</p>
+
+<h3 id="basic">Basic</h3>
+
+<p>The IMP-Doc support provided by DHP is based on the <a href="https://github.com/Arcensoth/imp-spec/blob/master/docs/imp_doc.md">Interoperable Module Protocol Documentation Format</a>
+proposed by <a href="https://github.com/Arcensoth">Arcensoth</a>, please take a look at the specification first. We will then
+cover the things that you should know when using IMP-Doc in DHP.</p>
+
+<h3 id="dhps-implementation">DHP’s Implementation</h3>
+
+<h4 id="annotations">Annotations</h4>
+
+<p>Most of the annotations in IMP-Doc haven’t gotten a special meaning in DHP yet. We will provide support for them 
+gradually.</p>
+
+<p>Exceptions are <code class="language-plaintext highlighter-rouge">@api</code>, <code class="language-plaintext highlighter-rouge">@public</code>, and <code class="language-plaintext highlighter-rouge">@within</code>. They are used to change the visibility of resources in DHP; see
+<a href="Access-Modifiers">Access Modifiers</a> for more information.</p>
+
+<p>Certain annotations proposed by IMP-Doc require some parameters, e.g. the
+<code class="language-plaintext highlighter-rouge">@input score &lt;name&gt; &lt;objective&gt; [description]</code> annotation that can lists all the score inputs of the function.
+In DHP’s implementation, you can break at any spaces that separate different parameters of an annotation and 
+turn into a new line with indentation (&gt;= 2 spaces). For example, all the following comments are legal and 
+have the same meaning in DHP:</p>
+
+<pre><code class="language-mcfunction">#&gt; example:foo
+# @input score $bar mypack.baz Description for the first score.
+# @input score $bar mypack.qux Description for the second score.
+
+#&gt; example:foo
+# @input
+#   score $bar mypack.baz Description for the first score.
+#   score $bar mypack.qux Description for the second score.
+
+#&gt; example:foo
+# @input
+#   score $bar mypack.baz
+#       Description for the first score.
+#   score $bar mypack.qux
+#       Description for the second score.
+
+#&gt; example:foo
+# @input score $bar
+#   mypack.baz
+#       Description for the first score.
+#   mypack.qux
+#       Description for the second score.
+
+#&gt; example:foo
+# @input
+#   score
+#       $bar
+#           mypack.baz
+#               Description for the first score.
+#           mypack.qux
+#               Description for the second score.
+</code></pre>
+
+<h4 id="imp-doc-for-commands">IMP-Doc for Commands</h4>
+
+<p>Apart from writing IMP-Doc in the first line of a mcfunction to describe the whole file, you can also write
+IMP-Doc in front of certain commands to describe the resources defined/declared by them. The key difference
+is that you do not write the function ID after the <code class="language-plaintext highlighter-rouge">#&gt;</code> characters in the first line of the comment. Here are
+some examples:</p>
+
+<pre><code class="language-mcfunction">#&gt;
+# A bossbar that is for xxx.
+# - Max: 100.
+# - Value: should be the amount of xxx.
+# @internal
+bossbar add spgoding:foo ""
+
+#&gt; This tag is used by xxx.
+#declare tag qux
+</code></pre>
+
+<p>For a complete list of commands/comments that can define/declare resources, see <a href="Declare-Comment">Declare Comment</a>.</p>
+
+<p>You can add an indentation (&gt;= 2 spaces) before the commands after the IMP-Doc to make a single doc comment affect
+multiple definitions/declarations at the same time. e.g.</p>
+
+<pre><code class="language-mcfunction">#&gt; A set of teams with colors.
+    team add example.red
+    team add example.blue
+
+#&gt; 
+# Score holders for xxx calculation.
+# @within spgoding:calc/**
+    #declare score_holder a
+    #declare score_holder b
+    #declare score_holder c
+</code></pre>
+
+<h3 id="further-reading">Further Reading</h3>
+
+<p>See <a href="Access-Modifiers">Access Modifiers</a> to learn about how to use access modifier annotations to limit the 
+visual scope of resources.</p>
+
+<h3 id="references">References</h3>
+
+<ul>
+  <li><a href="https://github.com/Arcensoth/imp-spec/blob/master/docs/imp_doc.md">IMP Documentation Format (IMP-Doc)</a></li>
+</ul>
+
+<h2 id="access-modifiers-support">Access Modifiers Support</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Access-Modifiers</p>
+</blockquote>
+
+<h3 id="within"><code class="language-plaintext highlighter-rouge">@within</code></h3>
+
+<p>Restrict the visibility of this resource to certain files that match the namespaced ID pattern.</p>
+
+<h4 id="syntax">Syntax</h4>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">within &lt;id: namespaced ID pattern&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">within * &lt;id: namespaced ID pattern&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">within &lt;type: file type&gt; &lt;id: namespaced ID pattern&gt;</code></li>
+</ul>
+
+<h5 id="file-type">File Type</h5>
+
+<p>You can see a full list of file types in <a href="Cache-Type#file-types">this page</a>. Only the specified type of files that 
+match the namespaced ID pattern can access to the resource.</p>
+
+<p>Specifying <code class="language-plaintext highlighter-rouge">*</code> or not specifying file type at all results in allowing any types of files that match the pattern to
+access the resource.</p>
+
+<h5 id="namespaced-id-pattern">Namespaced ID Pattern</h5>
+
+<p>A namespaced ID pattern is really similar to a namespaced ID. The difference is that you can use certain wildcards in
+it:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">?</code>: Represents an arbitrary character that matches <code class="language-plaintext highlighter-rouge">[a-z0-9_\-\.]</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">*</code>: Represents 1 or more characters that matches <code class="language-plaintext highlighter-rouge">[a-z0-9_\-\.]</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">**</code>: Represents any amount (including 0) of any characters (including <code class="language-plaintext highlighter-rouge">:</code> and <code class="language-plaintext highlighter-rouge">/</code>).</li>
+</ul>
+
+<p>Some examples of the namespaced ID pattern:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">spgoding:foo</code>: Matches <code class="language-plaintext highlighter-rouge">spgoding:foo</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">spgoding:ba?</code>: Matches <code class="language-plaintext highlighter-rouge">spgoding:bar</code> and <code class="language-plaintext highlighter-rouge">spgoding:baz</code>, but not <code class="language-plaintext highlighter-rouge">spgoding:foo</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">spgoding:*/qux</code>: Matches <code class="language-plaintext highlighter-rouge">spgoding:foo/qux</code> and <code class="language-plaintext highlighter-rouge">spgoding:bar/qux</code>, but not <code class="language-plaintext highlighter-rouge">spgoding:abc</code> nor <code class="language-plaintext highlighter-rouge">spgoding:qux</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">spgoding:**/foo</code>: Matches <code class="language-plaintext highlighter-rouge">spgoding:foo</code>, <code class="language-plaintext highlighter-rouge">spgoding:bar/foo</code>, and <code class="language-plaintext highlighter-rouge">spgoding:bar/qux/foo</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">spgoding:**</code>: Matches any files that is under the <code class="language-plaintext highlighter-rouge">spgoding</code> namespace.</li>
+  <li><code class="language-plaintext highlighter-rouge">**</code>: Matches everything.</li>
+</ul>
+
+<h4 id="examples">Examples</h4>
+
+<pre><code class="language-mcfunction">#&gt; spgoding:foo
+# This function can be accessed from any files under the `example` namespace.
+# @within example:**
+
+#&gt; spgoding:foo
+# This function can be accessed from any files under the `example` namespace.
+# @within * example:**
+
+#&gt; spgoding:foo
+# This function can only be accessed from functions under the `example` namespace.
+# @within function example:**
+
+#&gt; spgoding:foo
+# This function can be accessed from both functions and function tags under the `example` namespace.
+# @within 
+#   function example:**
+#   tag/function example:**
+</code></pre>
+
+<h3 id="private"><code class="language-plaintext highlighter-rouge">@private</code></h3>
+
+<p>Restrict the visibility of this resource to the current file.</p>
+
+<h4 id="syntax-1">Syntax</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@private</code></li>
+</ul>
+
+<h4 id="examples-1">Examples</h4>
+
+<pre><code class="language-mcfunction">#&gt;
+# This objective can be accessed from the current file.
+# @private
+scoreboard objectives add foo dummy
+
+#&gt;
+# The effect of @private can actually be implemented with @within:
+# @within &lt;The ID of the current function file&gt;
+</code></pre>
+
+<h3 id="internal"><code class="language-plaintext highlighter-rouge">@internal</code></h3>
+
+<p>Restrict the visibility of this resource to the same namespace as the current file and the default
+namespace (<code class="language-plaintext highlighter-rouge">minecraft</code>).</p>
+
+<h4 id="syntax-2">Syntax</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@internal</code></li>
+</ul>
+
+<h4 id="examples-2">Examples</h4>
+
+<pre><code class="language-mcfunction">#&gt; spgoding:foo
+# This function can be accessed from any files under the `spgoding` namespace and the `minecraft` namespace.
+# @internal
+
+#&gt; spgoding:foo
+# The effect of @internal can actually be implemented with @within:
+# @within
+#   spgoding:**
+#   minecraft:**
+</code></pre>
+
+<h3 id="public-and-api"><code class="language-plaintext highlighter-rouge">@public</code> and <code class="language-plaintext highlighter-rouge">@api</code></h3>
+
+<p>No restrictions to the visibility of this resource.</p>
+
+<h4 id="syntax-3">Syntax</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@public</code></li>
+  <li><code class="language-plaintext highlighter-rouge">@api</code></li>
+</ul>
+
+<h4 id="examples-3">Examples</h4>
+
+<pre><code class="language-mcfunction">#&gt; spgoding:foo
+# This function can be accessed from everywhere.
+# @public
+
+#&gt; spgoding:foo
+# The effect of @public can actually be implemented with @within:
+# @within **
+</code></pre>
+
+<h3 id="default-visibility-config">Default Visibility Config</h3>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Env-Options#defaultvisibility</p>
+</blockquote>
+
+<p>Specify the default access modifier for resources. See also <a href="Access-Modifiers">Access Modifiers</a>.</p>
+
+<h4 id="available-options">Available options</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"public"</code>: (Default) Public.</li>
+  <li><code class="language-plaintext highlighter-rouge">"internal"</code>: Internal.</li>
+  <li><code class="language-plaintext highlighter-rouge">"private"</code>: Private.</li>
+  <li>(Object) Simulates a <code class="language-plaintext highlighter-rouge">@within</code> modifier.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">type</code>: The type of files that can access this resource. Can be one of the <a href="Cache-Type#file-types">file types</a> 
+  or <code class="language-plaintext highlighter-rouge">"*"</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">pattern</code>: A namespaced ID pattern. See <a href="Access-Modifiers">Access Modifiers</a> for more information.</li>
+    </ul>
+  </li>
+  <li>(Array) Simulates a series of <code class="language-plaintext highlighter-rouge">@within</code> modifiers.
+    <ul>
+      <li>(Object) Using the same format as the above object.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="strict-check-configs">Strict Check Configs</h3>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Lint-Rules</p>
+</blockquote>
+
+<p>You can enable several strict check configs to show diagnostics for undefined resources. 
+See <a href="Lint-Rules">Lint Rules</a> for more information.</p>
+
+<h2 id="nested-data-pack-detection">Nested Data Pack Detection</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Env-Options#detectiondepth</p>
+</blockquote>
+
+<p>Added a new config called <code class="language-plaintext highlighter-rouge">datapack.env.detectionDepth</code> which defaults to <code class="language-plaintext highlighter-rouge">1</code>. Instead of seeing all workspace roots
+as data packs, the language server now actually detects recursively to see if there is a <code class="language-plaintext highlighter-rouge">pack.mcmeta</code> file and a
+<code class="language-plaintext highlighter-rouge">data</code> folder. By changing the value of this config, you can alter the data pack detection depth of the language 
+server. Note that higher values require more time to check and might reduce the performance.</p>
+
+<p>By setting a value greater than or equal to <code class="language-plaintext highlighter-rouge">1</code>, you can open the <code class="language-plaintext highlighter-rouge">.minecraft/saves/&lt;save name&gt;/datapacks</code> folder
+directly in your editor and enjoy editing all data packs within it instead of having all data packs added to the
+workspace manually.</p>
+
+<h2 id="creating-non-existent-files-quickly">Creating Non-existent Files Quickly</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/Code-Actions</p>
+</blockquote>
+
+<p>Added a new quick fix (<code class="language-plaintext highlighter-rouge">id-create-file</code>) to create non-existent resources in the current data pack.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Name</th>
+      <th>Ex. Before</th>
+      <th>Ex. After</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id-create-file</code></td>
+      <td>Create %0% in the same data pack</td>
+      <td>A file that doesn’t exist.</td>
+      <td>The file is created.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="nbt-array-length-check">NBT Array Length Check</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/nbtArrayLengthCheck</p>
+</blockquote>
+
+<p>Added a new config called <code class="language-plaintext highlighter-rouge">datapack.lint.nbtArrayLengthCheck</code> to decide whether to show diagnostics for NBT arrays
+that don’t have the required amount of tags in it.</p>
+
+<h3 id="examples-4">Examples</h3>
+
+<h4 id="default">Default</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"nbtArrayLengthCheck"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"warning"</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="disabled">Disabled</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"nbtArrayLengthCheck"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="nbt-list-length-check">NBT List Length Check</h2>
+
+<blockquote>
+  <p>Wiki: https://github.com/SPGoding/datapack-language-server/wiki/nbtListLengthCheck</p>
+</blockquote>
+
+<p>Added a new config called <code class="language-plaintext highlighter-rouge">datapack.lint.nbtListLengthCheck</code> to decide whether to show diagnostics for NBT lists
+that don’t have the required amount of tags in it.</p>
+
+<h3 id="examples-5">Examples</h3>
+
+<h4 id="default-1">Default</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"nbtListLengthCheck"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="enabled">Enabled</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"nbtListLengthCheck"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"warning"</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="diagnostics">Diagnostics</h2>
+
+<ul>
+  <li>The language server now provides warnings when there are too many blocks affected by the <code class="language-plaintext highlighter-rouge">/clone</code> or <code class="language-plaintext highlighter-rouge">/fill</code> command.</li>
+</ul>
+
+<h1 id="-localizations-in-300">🌐 Localizations in 3.0.0</h1>
+
+<p><img src="https://l10n.spgoding.com/widgets/datapack-helper-plus/-/language-server/multi-auto.svg" alt="" /></p>
+
+<ul>
+  <li>Add Chinese (Traditional).</li>
+  <li>Translations for German, Japanese, and Chinese (Simplified) are updated to 100%.</li>
+  <li>Translations for Italian are updated to 90%.</li>
+</ul>
+
+<h1 id="-performance-in-300">⚡ Performance in 3.0.0</h1>
+
+<ul>
+  <li>The initialization process of the language server is now 100% asynchrouns and no longer blocks the requests from 
+the client, which means you can use all the features right after you launch the server. No more “Loading…” prompts!</li>
+  <li>The initialization time in general has been reduced by approximately 81%*.</li>
+  <li>The command syntax tree navigation mechanism has been improved from a time complexity of O(n) to O(1), which reduces
+the cost by approximately 39%*.
+    <ul>
+      <li>This change only applies to Java Edition 1.16 as syntax trees for older versions aren’t maintained.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>* The data isn’t accurate as I only tested it once.</p>
+
+<h1 id="-bugfixes-in-300">🐛 Bugfixes in 3.0.0</h1>
+
+<p>Notable fixes:</p>
+
+<ul>
+  <li><a href="https://github.com/SPGoding/datapack-language-server/issues/434">#434</a> - No completions for commands in text components</li>
+  <li><a href="https://github.com/SPGoding/datapack-language-server/issues/435">#435</a> - Wrong completion range for special characters</li>
+  <li><a href="https://github.com/SPGoding/datapack-language-server/issues/606">#606</a> - Missing <code class="language-plaintext highlighter-rouge">minecraft:empty</code> loot table</li>
+  <li>Not supporting Sublime Text 3 because of how it handles URIs.</li>
+</ul>
+
+<p>See all known 21 bugs that were fixed in 3.0.0: <a href="https://github.com/SPGoding/datapack-language-server/issues?q=is%3Aissue+milestone%3A%22Release+3.0.0%22+label%3A%22%F0%9F%90%9B+bug%22+">query</a>.</p>
+
+<h1 id="-refactors-in-300">♻ Refactors in 3.0.0</h1>
+
+<ul>
+  <li>Changed completion logic from using <code class="language-plaintext highlighter-rouge">insertText</code> to using <code class="language-plaintext highlighter-rouge">textEdit</code>.</li>
+  <li>Moved all <code class="language-plaintext highlighter-rouge">./utils/handlers</code> to <code class="language-plaintext highlighter-rouge">./services</code>.</li>
+  <li>Wrapped a lot of messy logic into the <code class="language-plaintext highlighter-rouge">DatapackLanguageService</code> class.</li>
+  <li>Changed the implementation of function parser to be based on <code class="language-plaintext highlighter-rouge">plugins.SyntaxComponent</code>.</li>
+  <li>Changed <code class="language-plaintext highlighter-rouge">LineNode</code> to <code class="language-plaintext highlighter-rouge">CommandComponent</code> which implements the <code class="language-plaintext highlighter-rouge">plugins.SyntaxComponent</code> interface.</li>
+  <li>Migrated the function command parser logic to the <code class="language-plaintext highlighter-rouge">McfunctionPlugin</code>.</li>
+  <li>Changed to use string URIs internally.</li>
+  <li>Moved the language detection logic out of the server.</li>
+</ul>
+
+<h1 id="-future-plans">🕙 Future Plans</h1>
+
+<p>See all backlogged issues: <a href="https://github.com/SPGoding/datapack-language-server/issues?q=is%3Aissue+milestone%3ABacklog+is%3Aopen">query</a>.</p>
+
+<h1 id="-thank-you">💛 Thank You</h1>
+
+<p>A big <em>thank you</em> goes to these wonderful people! (sorted by the Unicode of names)</p>
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://www.mcbbs.net/home.php?mod=space&amp;uid=2113976"><img src="https://www.mcbbs.net/uc_server/data/avatar/002/11/39/76_avatar_big.jpg" width="64px;" alt="" /><br /><sub><b>AOOAcat</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/724" target="_blank" title="Bug reports">🐛 #724</a></td>
+    <td align="center"><a href="https://github.com/Arcensoth"><img src="https://avatars2.githubusercontent.com/u/1885643?s=460&amp;u=6c40bfd2701329a442810831d3a2cf954c8cf5de&amp;v=4" width="64px;" alt="" /><br /><sub><b>Arcensoth</b></sub></a></td><td align="left"><a href="https://github.com/Arcensoth/mcdata" target="_blank" title="Dependency">⬆️ Maintains mcdata repository</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/ChenCMD"><img src="https://avatars2.githubusercontent.com/u/46134240?s=460&amp;u=ca934b86e5189ea9c598a51358571e777e21aa2f&amp;v=4" width="64px;" alt="" /><br /><sub><b>ChenCMD</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues?q=author%3AChenCMD" target="_blank" title="Collaborator of the Project">💎 Collaborator</a></td>
+    <td align="center"><a href="https://github.com/Ghoulboy78"><img src="https://avatars1.githubusercontent.com/u/53367549?s=460&amp;v=4" width="64px;" alt="" /><br /><sub><b>Ghoulboy</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/commits?author=Ghoulboy78" target="_blank" title="Localization">🌐 Italian (it)</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://afdian.net/@k_bai"><img src="https://pic1.afdiancdn.com/user/f34c5d62954411e8948a52540025c377/avatar/a08952a177bcf9aa806e710c0d695dc3_w719_h720_s657.jpg?imageView2/1/w/240/h/240" width="64px;" alt="" /><br /><sub><b>K_bai</b></sub></a></td><td align="left"><a href="https://github.com/sponsors/SPGoding" target="_blank" title="Financial support">☕ Coffee</a></td>
+    <td align="center"><a href="https://github.com/misode"><img src="https://avatars1.githubusercontent.com/u/17352009?s=460&amp;u=2813225036a78ea0c585fa5f9150d448c3a8ff8e&amp;v=4" width="64px;" alt="" /><br /><sub><b>Misode</b></sub></a></td><td align="left"><a href="https://github.com/misode/minecraft-schemas" target="_blank" title="Dependency">⬆️ Maintains minecraft-schemas repository</a><br /><a href="https://github.com/SPGoding/datapack-language-server/pull/711" target="_blank" title="Code">💻 #711</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/445" target="_blank" title="Ideas, Planning, and Feedback">✨ #445</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/592" target="_blank" title="Bug reports">🐛 #592</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/593" target="_blank" title="Bug reports">🐛 #593</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/NeunEinser"><img src="https://avatars3.githubusercontent.com/u/12124394?s=460&amp;v=4" width="64px;" alt="" /><br /><sub><b>NeunEinser</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/commits?author=NeunEinser" target="_blank" title="Localization">🌐 German (de)</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/652" target="_blank" title="Bug reports">🐛 #652</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/653" target="_blank" title="Bug reports">🐛 #653</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/654" target="_blank" title="Bug reports">🐛 #654</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/661" target="_blank" title="Bug reports">🐛 #661</a></td>
+    <td align="center"><a href="https://github.com/Yurihaia"><img src="https://avatars3.githubusercontent.com/u/17830663?s=400&amp;u=4959d74e027642f5a207dcd5e112005c5932b844&amp;v=4" width="64px;" alt="" /><br /><sub><b>Yurihaia</b></sub></a></td><td align="left"><a href="https://github.com/Yurihaia/mc-nbtdoc" target="_blank" title="Dependency">⬆️ Maintains mc-nbtdoc repository</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href=""><img src="https://cdn.discordapp.com/avatars/485428324638916608/c10510b1dfa7a8174f3a1001618cafa9.webp?size=256" width="64px;" alt="" /><br /><sub><b>boon4681</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/681" target="_blank" title="Bug reports">🐛 #681</a></td>
+    <td align="center"><a href="https://github.com/eke0909"><img src="https://avatars0.githubusercontent.com/u/50884607?s=400&amp;v=4" width="64px;" alt="" /><br /><sub><b>eke0909</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/700" target="_blank" title="Bug reports">🐛 #700</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://www.mcbbs.net/home.php?mod=space&amp;uid=10240"><img src="https://www.mcbbs.net/uc_server/avatar.php?uid=10240&amp;size=middle" width="64px;" alt="" /><br /><sub><b>kakagRou</b></sub></a></td><td align="left"><a href="https://github.com/sponsors/SPGoding" target="_blank" title="Financial support">☕ Coffee</a></td>
+    <td align="center"><a href="https://github.com/lakejason0"><img src="https://avatars1.githubusercontent.com/u/36039861?s=460&amp;v=4" width="64px;" alt="" /><br /><sub><b>lakejason0</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/commits?author=lakejason0" target="_blank" title="Localization">🌐 Chinese (Traditional) (zh-tw)</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/655" target="_blank" title="Bug reports">🐛 #655</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/mathaym25"><img src="https://avatars2.githubusercontent.com/u/35702771?s=460&amp;u=393d01acff13df6e83beb953bd6f916f514f5141&amp;v=4" width="64px;" alt="" /><br /><sub><b>mathaym25</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/434" target="_blank" title="Bug reports">🐛 #434</a></td>
+    <td align="center"><a href="https://github.com/pca006132"><img src="https://avatars3.githubusercontent.com/u/12198657?s=460&amp;v=4" width="64px;" alt="" /><br /><sub><b>pca006132</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/605" target="_blank" title="Ideas, Planning, and Feedback">✨ #605</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/shurik204"><img src="https://avatars2.githubusercontent.com/u/43310372?s=460&amp;u=91bc2eb7213cd4580be5de984f7f920397217103&amp;v=4" width="64px;" alt="" /><br /><sub><b>shurik204</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/678" target="_blank" title="Bug reports">🐛 #678</a></td>
+    <td align="center"><a href="https://github.com/zyjking"><img src="https://avatars2.githubusercontent.com/u/37742023?s=400&amp;v=4" width="64px;" alt="" /><br /><sub><b>zyjking</b></sub></a></td><td align="left"><a href="https://github.com/sponsors/SPGoding" target="_blank" title="Financial support">☕ Coffee</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href=""><img src="https://cdn.discordapp.com/avatars/107952648312860672/c168fcedcbfebe58bf14034920945d7a.webp?size=256" width="64px;" alt="" /><br /><sub><b>Ξи</b></sub></a></td><td align="left"><a href="https://github.com/SPGoding/datapack-language-server/issues/660" target="_blank" title="Bug reports">🐛 #660</a><br /><a href="https://github.com/SPGoding/datapack-language-server/issues/660" target="_blank" title="Bug reports">🐛 #671</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+<p>This project follows the <a href="https://github.com/all-contributors/all-contributors">all-contributors</a> specification. Contributions of any kind are welcome!</p>
+
+<h2 id="looking-to-contribute">Looking to contribute?</h2>
+
+<p>Thanks a lot! You can consider <a href="https://github.com/SPGoding/datapack-language-server/blob/master/CONTRIBUTING.md">contributing</a>
+by <a href="https://github.com/sponsors/SPGoding">sponsoring</a>, <a href="https://github.com/SPGoding/datapack-language-server/issues/new">reporting bugs/sharing ideas</a>,
+or <a href="https://l10n.spgoding.com">helping localization</a>!</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+	<div class="wrapper">
+
+		<div class="footer-col-wrapper">
+			<p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="CC BY-NC-SA 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png"></a><br>The contents of this website, unless otherwise indicated, are licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			We have shamelessly stolen some of the website design from the <a href="https://fabricmc.net/">Fabric website</a>.</p>
+			<p style="font-size: 0.7em;">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</p>
+		</div>
+
+	</div>
+</footer>
+</body>
+
+</html>
